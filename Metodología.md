@@ -1,0 +1,7 @@
+# Metodología CRISP-DM (Cross-Industry Standard Process for Data Mining)
+
+![crisp](https://www.ibm.com/support/knowledgecenter/es/SS3RA7_sub/modeler_crispdm_ddita/clementine/images/crisp_process.jpg)
+
+El ciclo vital del modelo contiene seis fases con flechas que indican las dependencias más importantes y frecuentes entre fases. La secuencia de las fases no es estricta. De hecho, la mayoría de los proyectos avanzan y retroceden entre fases si es necesario.
+
+El modelo de CRISP-DM es flexible y se pueden personalizar fácilmente.
