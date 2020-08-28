@@ -1,7 +1,129 @@
 # Metodología CRISP-DM (Cross-Industry Standard Process for Data Mining)
 
-![crisp](https://www.ibm.com/support/knowledgecenter/es/SS3RA7_sub/modeler_crispdm_ddita/clementine/images/crisp_process.jpg)
+Para el desarrollo del proyecto de predicción de Covid-19 en las principales ciudades de Colombia se utilizó la metodología CRISP-DM, el cual proporciona una descripción normalizada del ciclo de vida de un proyecto estándar de análisis de datos, contiene seis fases: 
 
-El ciclo vital del modelo contiene seis fases con flechas que indican las dependencias más importantes y frecuentes entre fases. La secuencia de las fases no es estricta. De hecho, la mayoría de los proyectos avanzan y retroceden entre fases si es necesario.
+1. Entendimiento del negocio
+2. Entendimiento de los datos
+3. Preparación de datos
+4. Modelamiento
+5. Evaluación
+6. Desarrollo
 
-El modelo de CRISP-DM es flexible y se pueden personalizar fácilmente.
+La secuencia de las fases no es estricta. De hecho, la mayoría de los proyectos avanzan y retroceden entre fases en caso de que sea necesario. 
+
+<p align = "center" >
+  <img src="https://miro.medium.com/max/494/1*VH9RlYPSjL6YOtBtHxunqQ.png" alt="CRISP-DM" width="300px" height="300px"/>
+</p>
+
+# Entendimiento del negocio
+En esta fase se busca conocer la necesidad, determinar el objetivo del negocio a resolver con el proyecto de minería de datos adicionalmente evaluar la situación actual.
+
+Coronavirus es el nombre que recibe una amplia familia de virus que puede infectar al ser humano causando una variedad de enfermedades severas. Un miembro de la familia de coronavirus es el SARS-CoV-2 o mejor conocido como Covid-19, el cual se transmite y circula ampliamente en la comunidad.
+
+La enfermedad del Coronavirus (Covid-19) fue reportada el 31 de diciembre de 2019 en la ciudad de Wuhan en China, esta enfermedad se exparció rápidamente por el mundo al punto que la organización mundial de la salud (OMS) declaró el 4 de mayo de 2020, el Coronavirus como pandemia, luego de que se registraran 3.581.884 confirmados al rededor del mundo, dejando a esa fecha 248.558 muertes.
+
+Colombia no ha sido ajeno a la pandemia. El primer caso positivo se registró el 6 de marzo de 2020 y el gobierno nacional el 24 de marzo declara ailamiento estricto para evitar la rápida propagación y mitigar el impacto en la red hospitalaria. 
+
+### Objetivo del negocio
+
+El objetivo del negocio es conocer el comportamiento del Covid-19 en las 5 principales ciudades de Colombia a partir de los estados por los que pasa una persona desde que se reporta como infectada.
+
+
+### Objetivo de minería de datos
+
+El objetivo de este proyecto es la predicción de corto y mediano plazo de el total de casos confirmados, los nuevos casos, los casos activos, recuperados y muertes para las 5 principales ciudades de Colombia, utilizando técnicas estadísticas, de inteligencia artificial o modelos híbridos.
+
+#### Requerimientos
+
+  * El producto de datos propuesto debe descargar la última información dispobile de forma automática cada vez que se ejecute.
+
+  * La limpieza de datos, recalibración de los modelos, etc, deben ejecutarse automaticamente sin intervención humana. Es decir, el usuario ejecuta unicamente la rutina principal y todo el sistema se actualiza automaticamente.
+
+  * Debe presentar los resultados en un dashboard que use GitHub pages (recuerde que puede utilizar jinja2, HTML, etc)
+
+  * Debe presentar intervalos de confianza para los pronósticos.
+
+  * Debe presentar métricas de calibración para la información histórica.
+
+# Entendimiento de los datos
+
+En esta fase se explora las fuentes de datos a utilizar para el desarrollo del proyecto, se describen los datos, se exploran y se verifica la calidad de los mismos.
+
+Comportamiento del coronavirus en las principales ciudades de Colombia esta siendo recolectado y centralizado por el Instituto Nacional de Salud. Esta información esta siendo puesta a disposición de a través de la página web [www.datos.gov.co](https://www.datos.gov.co/Salud-y-Protecci-n-Social/Casos-positivos-de-COVID-19-en-Colombia/gt2j-8ykr/data)
+
+### Diccionario de datos
+|**Campo**                             |**Tipo de dato** |
+|---------                             | --------------- |
+|ID de caso.                           | Texto           | 
+|Fecha de notificación	                | Texto           |
+|Código DIVIPOLA                       | Texto           |
+|Ciudad de ubicación                   | Texto           |
+|Departamento o Distrito               | Texto           |
+|atención                              | Texto           |
+|Edad                                  | Texto           |
+|Sexo                                  | Texto           |
+|Tipo                                  | Texto           |
+|Estado                                | Texto           |
+|País de procedencia                   | Texto           |
+|Fecha de inicio de síntomas (FIS)     | Texto           |
+|Fecha de muerte                       | Texto           |
+|Fecha diagnostico                     | Texto           |
+|Fecha de confirmación por laboratorio | Texto           |
+|Fecha recuperado                      | Texto           |
+|Fecha reporte web                     | Texto           |
+|Fecha de publicación en sitio web     | Texto           |
+|Tipo recuperación                     | Texto           |
+|Codigo departamento                   | Número          |
+|Codigo pais                           | Número          |
+|Pertenencia etnica                    | Texto           |
+|Nombre grupo etnico                   | Texto           |
+
+
+### Gráficas
+![Alt text](img/logo.png)
+
+### Hallazgos
+
+1. 
+2.
+3.
+
+
+# Preparación de datos
+
+En esta fase se toma como insumo los hallazgos encontrados en la fase anterior para ser ajustados de acuerdo a lo requerido, aquí se seleccionan los datos a usar dentro del proyecto, se aumenta la calidad de los mismos, en caso de ser necesario se construyen nuevos atributos y se integra diferentes fuentes de información
+
+### Actividades realizadas
+
+#### Datos seleccionados
+
+#### Limpieza
+
+#### Derivación de nuevos atributos
+
+# Modelamiento
+
+En la fase de modelamiento se evaluan diferentes técnicas que de acuerdo a la literatura y conocimiento previo tengan una aproximación significativa a la solución del objetivo de mineria de datos, se selecciona la que más se ajusta, se contruye el modelo y se ejecuta.
+
+### Técnicas utilizadas
+
+#### Modelo lógistico
+
+Función mantemática usada en diferentes modelos de crecimiento poblacional, propagación de enfermedades epidémicas. Se caracteriza por un crecimiento incremental al inicio y luego decrecer en un estado del tiempo, dicho crecimiento es carecterizado por la fórmula:
+![log_formula](https://miro.medium.com/max/536/1*ktniY6tA5bAZrhRTkyWEBg.png)
+
+
+#### Redes Neuronales 
+
+# Evaluación 
+
+En esta etapa se revisa los resultados obtenidos de la ejecución del modelo con el fin de evalor las metricas y determinar si el modelo cumple con los objetivos propuestos.
+
+
+# Despliegue 
+
+En esta fase se busca entregar los resulados de la solución a la organización
+
+Para el despliegue se creo un dashboard utilizando el framework de Python, Dash. 
+La exposición en internet fue usando heroku, lo cual es una plataforma como servicio de computación en la nube
+El dashboard se puede consultar [Predicción Covid-19 Colombia]()
