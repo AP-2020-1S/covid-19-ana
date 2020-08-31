@@ -1,6 +1,6 @@
-# Metodología CRISP-DM (Cross-Industry Standard Process for Data Mining)
+# Metodología usada en predicción de Covid-19 en Colombia
 
-Para el desarrollo del proyecto de predicción de Covid-19 en las principales ciudades de Colombia se utilizó la metodología CRISP-DM, el cual proporciona una descripción normalizada del ciclo de vida de un proyecto estándar de análisis de datos, contiene seis fases: 
+Para el desarrollo del proyecto de predicción de Covid-19 en las principales ciudades de Colombia se utilizó la metodología CRISP-DM (Cross-Industry Standard Process for Data Mining), la cual proporciona una descripción normalizada del ciclo de vida de un proyecto estándar de análisis de datos, contiene seis fases: 
 
 1. Entendimiento del negocio
 2. Entendimiento de los datos
