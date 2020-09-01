@@ -1,7 +1,7 @@
 import wget, os
 
 
-class Utilities():
+class Utilities:
     fileName = "params.dat"
    
     def __init__(self):
@@ -22,7 +22,7 @@ class Utilities():
         return params
     
     # Function to fix dates
-    def dates_fix(df):
+    def dates_fix(self,df):
         # Convert dates to datetime
         df['Fecha de muerte'] = pd.to_datetime(df['Fecha de muerte'])
         df['Fecha diagnostico'] = pd.to_datetime(df['Fecha diagnostico'])
@@ -37,7 +37,7 @@ class Utilities():
         return df
 
     # Function to build counters
-    def build_counters(df):
+    def build_counters(self,df):
         # Build counters fields
         df["Casos"] = 1
         df.loc[(df['Fecha de muerte'].notnull() == True), 'Muertos'] = 1 
@@ -50,7 +50,7 @@ class Utilities():
         return df
 
     # Clean dataset
-    def clean_dataset(df):
+    def clean_dataset(self, df):
         # Delete records 
         df.drop(df[(~df['Fecha de muerte'].notnull() == False) & (~df['Fecha recuperado'].notnull() == False) & (df["atención"].notnull()==False)].index, inplace=True)
 
@@ -64,7 +64,7 @@ class Utilities():
         return df
 
     # Get cities 
-    def get_cities(df):
+    def get_cities(self, df):
         indixes = df.groupby(["Ciudad de ubicación"]).agg({'Casos': 'sum', 'Recuperados': 'sum', 'Activos': 'sum', 'Muertos': 'sum'}).sort_values(ascending=False, by="Casos").head().index
         cities = []
         for i in indixes:
@@ -72,7 +72,7 @@ class Utilities():
         
         return cities
 
-    def get_dates(df):
+    def get_dates(self, df):
         fechas = []
         fecha_maxima_muerte = df['Fecha de muerte'].max()
         fecha_minima_muerte = df['Fecha de muerte'].min()
@@ -94,7 +94,7 @@ class Utilities():
         
         return fechas    
 
-    def build_mineable_view(df, cities, dates):
+    def build_mineable_view(self, df, cities, dates):
         mv_final = pd.DataFrame()
         for i in cities:
             min_date = dates[0]
