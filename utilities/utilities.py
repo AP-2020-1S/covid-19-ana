@@ -1,4 +1,10 @@
 import wget, os
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import odeint
+from datetime import date, timedelta
+import datetime as dt
 
 
 class Utilities():
@@ -111,13 +117,20 @@ class Utilities():
 
             # Muertos
             muertos = df
-            muertos['Fecha de muerte'] = muertos['Fecha de muerte'].dt.date
+            
             muertos = muertos[muertos['Ciudad de ubicación'] == i].groupby(["Fecha de muerte"]).agg({'Muertos': 'sum'}).reset_index()
+            muertos['Fecha de muerte'] = muertos['Fecha de muerte'].dt.date
             
             # Recuperados
             recuperados = df
-            recuperados['Fecha recuperado'] = recuperados['Fecha recuperado'].dt.date
+            
             recuperados = recuperados[recuperados['Ciudad de ubicación'] == i].groupby(["Fecha recuperado"]).agg({'Recuperados': 'sum'}).reset_index()
+            recuperados['Fecha recuperado'] = recuperados['Fecha recuperado'].dt.date
+
+            # Activos
+            #activos = df
+            #activos['FIS'] = activos['FIS'].dt.date
+            #activos = activos[activos['Ciudad de ubicación'] == i].groupby(["FIS"]).agg({'Activos': 'sum'}).reset_index()
             
             # Merge
             mv=mv.merge(df_casos, how='left', left_on = "fecha", right_on="FIS")
@@ -126,6 +139,7 @@ class Utilities():
             mv = mv.groupby(["fecha"]).agg({'Casos': 'sum', 'Recuperados': 'sum'}).reset_index()
             mv=mv.merge(muertos, how='left', left_on = "fecha", right_on="Fecha de muerte")
             mv = mv.groupby(["fecha"]).agg({'Casos': 'sum', 'Recuperados': 'sum', 'Muertos': 'sum'}).reset_index()
+            #mv=mv.merge(activos, how='left', left_on = "fecha", right_on="FIS")
             #mv=mv.merge(df_acumulados, how='left', left_on = "fecha", right_on="FIS")
 
             mv['Casos_Acum'] = mv['Casos'].cumsum()
@@ -143,7 +157,6 @@ class Utilities():
             
             # Filling city missing
             mv['Ciudad de ubicación'] = i
-            
             dfs = [mv_final,mv]
             mv_final = pd.concat(dfs)
         
