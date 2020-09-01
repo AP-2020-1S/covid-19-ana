@@ -80,7 +80,17 @@ Comportamiento del coronavirus en las principales ciudades de Colombia esta sien
 
 
 ### Gráficas
-![Alt text](img/logo.png)
+
+#### Comparación entre las 5 ciudades con mas casos
+![Alt text](img/pieCiudades.JPG)
+
+#### Estados de la infección por ciudad
+![Alt text](img/CiudadesEstados.JPG)
+
+#### Evolución en el tiempo
+![Alt text](img/CiudadesTiempo.JPG)
+
+
 
 ### Hallazgos
 
