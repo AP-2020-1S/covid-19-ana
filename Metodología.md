@@ -96,9 +96,10 @@ Se realizo un análisis exploratorio de los datos y el detalle se puede encontra
 
 ### Hallazgos
 
-1. 
-2.
-3.
+1. La columna de atención en la cual se registran diferentes estados se encontró que hay problemas de calidad por lo cual se tomó la decisión de utilizar las fechas de recuperado y de muerte para realizar los respectivos conteos.
+2. Se evidencia que el campo de fecha de inicio de síntomas se está utilizando para marcar los casos de personas asintomáticas por lo cual es necesario hacer una limpieza para realizar los conteos de infecciones con dicho campo. La limpieza que se propone es que cuando se tenga el valor 'Asintomatico en el campo FIS se reemplaza por la fecha de reporte web.
+3. Se encontró que existen registros con el campo de fecha de recuperado y fecha de muerte simultaneamente lo cual es una inconsistencia por lo cual se realiza la limpieza asi: Si el registro tiene ambas fechas, se valida el campo de atención para encontrar si tiene valor de muerto o recuperado y dependiendo de dicho valor se limpia la fecha inconsistente. En caso que el campo atención tenga un valor diferente a recuperado o muerto el registro se elimina ya que no podemos determinar en cual estado se encuentra.
+4. Al validar los conteos de infectados, muertos, recuperados y activos de los ultimos dias reportados, encontramos que los últimos días siempre se registran valores atípicos que en días posteriores se actualizan por lo cual determinamos que lo mejor es descartar los ultimos 3 días de la serie para evitar que dichos datos preliminares generen ruido en las tendencias.
 
 
 # Preparación de datos
