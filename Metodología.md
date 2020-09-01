@@ -78,8 +78,10 @@ Comportamiento del coronavirus en las principales ciudades de Colombia esta sien
 |Pertenencia etnica                    | Texto           |
 |Nombre grupo etnico                   | Texto           |
 
+Se realizo un análisis exploratorio de los datos y el detalle se puede encontrar en el siguiente vínculo:
+[Análisis descriptivo](docs/Análisis_descriptivo_Covid.html)
 
-### Gráficas
+### Análisis gráfico
 
 #### Comparación entre las 5 ciudades con mas casos
 ![Alt text](img/pieCiudades.JPG)
