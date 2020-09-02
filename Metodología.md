@@ -1,6 +1,6 @@
 # Metodología usada en predicción de Covid-19 en Colombia
 
-Para el desarrollo del proyecto de predicción de Covid-19 en las principales ciudades de Colombia se utilizó la metodología CRISP-DM (Cross-Industry Standard Process for Data Mining), la cual proporciona una descripción normalizada del ciclo de vida de un proyecto estándar de análisis de datos, contiene seis fases: 
+Para el desarrollo del proyecto de predicción de Covid-19 en las principales ciudades de Colombia se utilizó la metodología CRISP-DM (Cross-Industry Standard Process for Data Mining), la cual proporciona una descripción normalizada del ciclo de vida de un proyecto estándar de análisis de datos. Esta metodología contiene seis fases: 
 
 1. Entendimiento del negocio
 2. Entendimiento de los datos
@@ -9,29 +9,29 @@ Para el desarrollo del proyecto de predicción de Covid-19 en las principales ci
 5. Evaluación
 6. Desarrollo
 
-La secuencia de las fases no es estricta. De hecho, la mayoría de los proyectos avanzan y retroceden entre fases en caso de que sea necesario. 
+La secuencia de las fases no es estricta. De hecho, la mayoría de los proyectos avanzan y retroceden entre fases en caso de ser necesario. 
 
 <p align = "center" >
   <img src="https://miro.medium.com/max/494/1*VH9RlYPSjL6YOtBtHxunqQ.png" alt="CRISP-DM" width="300px" height="300px"/>
 </p>
 
 # Entendimiento del negocio
-En esta fase se busca conocer la necesidad, determinar el objetivo del negocio a resolver con el proyecto de minería de datos adicionalmente evaluar la situación actual.
+En esta fase se busca conocer la necesidad del negocio, evaluar la situación actual y determinar el objetivo a resolver con el proyecto de minería de datos.
 
-Coronavirus es el nombre que recibe una amplia familia de virus que puede infectar al ser humano causando una variedad de enfermedades severas. Un miembro de la familia de coronavirus es el SARS-CoV-2 o mejor conocido como Covid-19, el cual se transmite y circula ampliamente en la comunidad.
+Coronavirus es el nombre que recibe una amplia familia de virus que pueden infectar al ser humano causando una variedad de enfermedades severas. Un miembro de la familia de coronavirus es el SARS-CoV-2 o mejor conocido como Covid-19, el cual se transmite y circula ampliamente entre la comunidad.
 
-La enfermedad del Coronavirus (Covid-19) fue reportada el 31 de diciembre de 2019 en la ciudad de Wuhan en China, esta enfermedad se exparció rápidamente por el mundo al punto que la organización mundial de la salud (OMS) declaró el 4 de mayo de 2020, el Coronavirus como pandemia, luego de que se registraran 3.581.884 confirmados al rededor del mundo, dejando a esa fecha 248.558 muertes.
+La enfermedad del Covid-19 fue reportada el 31 de diciembre de 2019 en la ciudad de Wuhan en China, esta enfermedad se exparció rápidamente por el mundo al punto que la organización mundial de la salud (OMS), declaró el 4 de mayo de 2020, el Covid-19 como pandemia, luego de que se registraran 3.581.884 confirmados al rededor del mundo, dejando a esa fecha 248.558 muertes.
 
-Colombia no ha sido ajeno a la pandemia. El primer caso positivo se registró el 6 de marzo de 2020 y el gobierno nacional el 24 de marzo declara ailamiento estricto para evitar la rápida propagación y mitigar el impacto en la red hospitalaria. 
+Colombia no ha sido ajena a la pandemia. El primer caso positivo se registró el 6 de marzo de 2020 y el gobierno nacional el 24 de marzo declara ailamiento estricto para evitar la rápida propagación y así poder mitigar el impacto que ocasionaría la enfermedad en la red hospitalaria. 
 
 ### Objetivo del negocio
 
-El objetivo del negocio es conocer el comportamiento del Covid-19 en las 5 principales ciudades de Colombia a partir de los estados por los que pasa una persona desde que se reporta como infectada.
+El objetivo del negocio es conocer el comportamiento del Covid-19 en las 5 principales ciudades de Colombia, a partir de los estados por los que pasa una persona desde que se reporta como infectada.
 
 
 ### Objetivo de minería de datos
 
-El objetivo de este proyecto es la predicción de corto y mediano plazo de el total de casos confirmados, los nuevos casos, los casos activos, recuperados y muertes para las 5 principales ciudades de Colombia, utilizando técnicas estadísticas, de inteligencia artificial o modelos híbridos.
+El objetivo de este proyecto es la predicción de corto y mediano plazo del total de casos confirmados, nuevos casos, casos activos, recuperados y muertes para las 5 principales ciudades de Colombia, utilizando técnicas estadísticas, de inteligencia artificial o modelos híbridos.
 
 #### Requerimientos
 
@@ -49,7 +49,7 @@ El objetivo de este proyecto es la predicción de corto y mediano plazo de el to
 
 En esta fase se explora las fuentes de datos a utilizar para el desarrollo del proyecto, se describen los datos, se exploran y se verifica la calidad de los mismos.
 
-Comportamiento del coronavirus en las principales ciudades de Colombia esta siendo recolectado y centralizado por el Instituto Nacional de Salud. Esta información esta siendo puesta a disposición de a través de la página web [www.datos.gov.co](https://www.datos.gov.co/Salud-y-Protecci-n-Social/Casos-positivos-de-COVID-19-en-Colombia/gt2j-8ykr/data)
+El comportamiento del Covid-19 en las principales ciudades de Colombia esta siendo recolectado y centralizado por el Instituto Nacional de Salud. Esta información esta siendo puesta a disposición del público general, a través de la página web [www.datos.gov.co](https://www.datos.gov.co/Salud-y-Protecci-n-Social/Casos-positivos-de-COVID-19-en-Colombia/gt2j-8ykr/data)
 
 ### Diccionario de datos
 |**Campo**                             |**Tipo de dato** |
@@ -78,7 +78,7 @@ Comportamiento del coronavirus en las principales ciudades de Colombia esta sien
 |Pertenencia etnica                    | Texto           |
 |Nombre grupo etnico                   | Texto           |
 
-Se realizo un análisis exploratorio de los datos y el detalle se puede encontrar en el siguiente vínculo:
+Se realizó un análisis exploratorio de los datos y el detalle se puede encontrar en el siguiente vínculo:
 [Análisis descriptivo](docs/Análisis_descriptivo_Covid.ipynb)
 
 ### Análisis gráfico a corte de 30 de Agosto de 2020
@@ -119,9 +119,11 @@ En esta fase se toma como insumo los hallazgos encontrados en la fase anterior p
 
 # Modelamiento
 
-En la fase de modelamiento se evaluan diferentes técnicas que de acuerdo a la literatura y conocimiento previo tengan una aproximación significativa a la solución del objetivo de mineria de datos, se selecciona la que más se ajusta, se contruye el modelo y se ejecuta.
+En la fase de modelamiento se evaluan las diferentes técnicas que de acuerdo a la literatura y conocimiento previo tengan una aproximación significativa a la solución del objetivo de mineria de datos. Se selecciona la técnica que más se ajusta, para luego construir el modelo y ejecutarlo.
 
 ### Técnicas utilizadas
+
+### SIR (Suceptible - Infectado - Recuperado o Muerto)
 
 #### Modelo lógistico
 
@@ -133,7 +135,7 @@ Función mantemática usada en diferentes modelos de crecimiento poblacional, pr
 
 # Evaluación 
 
-En esta etapa se revisa los resultados obtenidos de la ejecución del modelo con el fin de evalor las metricas y determinar si el modelo cumple con los objetivos propuestos.
+En esta etapa se revisa los resultados obtenidos en la ejecución del modelo, con el fin de evaluar las métricas de desempeño que arroja el modelo y determinar si este cumple con los objetivos propuestos.
 
 
 # Despliegue 
@@ -141,5 +143,5 @@ En esta etapa se revisa los resultados obtenidos de la ejecución del modelo con
 En esta fase se busca entregar los resulados de la solución a la organización
 
 Para el despliegue se creo un dashboard utilizando el framework de Python, Dash. 
-La exposición en internet fue usando heroku, lo cual es una plataforma como servicio de computación en la nube
-El dashboard se puede consultar [Predicción Covid-19 Colombia]()
+La exposición en internet fue usando heroku, la cual es una plataforma como servicio de computación en la nube
+Para visualizar el dashboard se puede consultar [Predicción Covid-19 Colombia]()
