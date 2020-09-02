@@ -81,7 +81,7 @@ Comportamiento del coronavirus en las principales ciudades de Colombia esta sien
 Se realizo un análisis exploratorio de los datos y el detalle se puede encontrar en el siguiente vínculo:
 [Análisis descriptivo](docs/Análisis_descriptivo_Covid.ipynb)
 
-### Análisis gráfico
+### Análisis gráfico a corte de 30 de Agosto de 2020
 
 #### Comparación entre las 5 ciudades con mas casos
 ![Alt text](img/pieCiudades.JPG)
@@ -92,6 +92,8 @@ Se realizo un análisis exploratorio de los datos y el detalle se puede encontra
 #### Evolución en el tiempo
 ![Alt text](img/CiudadesTiempo.JPG)
 
+#### Tabla comparativa
+![Alt text](img/compara.JPG)
 
 
 ### Hallazgos
