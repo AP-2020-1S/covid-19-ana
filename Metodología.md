@@ -94,7 +94,8 @@ Se realizo un análisis exploratorio de los datos y el detalle se puede encontra
 
 #### Tabla comparativa
 ![Alt text](img/compara.JPG)
-*Nota: La columna ERR cuenta los registros que originalmente tenian fecha de recuperado y fecha de muerte simultaneamente.
+
+Nota: La columna ERR cuenta los registros que originalmente tenian fecha de recuperado y fecha de muerte simultaneamente.
 
 ### Hallazgos
 
