@@ -1,43 +1,133 @@
+#%%
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import plotly.express as px
-import pandas as pd
 from dash.dependencies import Input, Output, State
-import base64
-from file_handle import File_Handle
 import dash_table
+import base64
+import pandas as pd
+import numpy as np
+from file_handle import File_Handle
+from SIR_model import SIR
+from SIR_predict import SirPredict
+from utilities.utilities import Utilities 
 
-
+#%%
+#Instances
 handle = File_Handle()
-file_status = handle.read_covid_file()
-tabtitle = 'Covid-19'
+sirmodel = SIR()
+sirpredict = SirPredict()
+utl = Utilities()
 
+#%%
+#Downloading data
+handle.download_censo_file()
+handle.download_covid_file()
+
+#%%
+#Loading data
+censo_df = pd.read_excel('data/ProyeccionMunicipios2005_2020.xls', sheet_name = 'Mpios',header=8)
+
+censo_df['MPIO'] = np.where(censo_df['MPIO'] == 'Bogotá, D.C.', 'Bogotá D.C.', censo_df['MPIO'])
+censo_df['MPIO'] = np.where(censo_df['MPIO'] == 'Cartagena', 'Cartagena de Indias', censo_df['MPIO'])
+
+data_org = pd.read_csv('data/Casos_positivos_de_COVID-19_en_Colombia.csv')
+
+#%%
+#Execution
+#------------------------------------------------------------------
+data = pd.DataFrame()
+cities = ["Medellín"]
+data = data_org[data_org["Ciudad de ubicación"].isin(cities)]
+data = utl.dates_fix(data)
+data = utl.build_counters(data)
+data = utl.clean_dataset(data)
+cities = utl.get_cities(data)
+dates = utl.get_dates(data)
+mv_med = utl.build_mineable_view(data, cities, dates)
+
+tasas_med = sirmodel.sir_tasas_init(mv_med)
+sir_formulas_med = sirmodel.sir_tasas(tasas_med, censo_df)
+original_med, predict_med = sirpredict.predict(sir_formulas_med,censo_df)
+
+#------------------------------------------------------------------
+data = pd.DataFrame()
+cities = ["Bogotá D.C."]
+data = data_org[data_org["Ciudad de ubicación"].isin(cities)]
+data = utl.dates_fix(data)
+data = utl.build_counters(data)
+data = utl.clean_dataset(data)
+cities = utl.get_cities(data)
+dates = utl.get_dates(data)
+mv_bog = utl.build_mineable_view(data, cities, dates)
+
+tasas_bog = sirmodel.sir_tasas_init(mv_bog)
+sir_formulas_bog = sirmodel.sir_tasas(tasas_bog, censo_df)
+original_bog, predict_bog = sirpredict.predict(sir_formulas_bog,censo_df)
+
+#------------------------------------------------------------------
+data = pd.DataFrame()
+cities = ["Cali"]
+data = data_org[data_org["Ciudad de ubicación"].isin(cities)]
+data = utl.dates_fix(data)
+data = utl.build_counters(data)
+data = utl.clean_dataset(data)
+cities = utl.get_cities(data)
+dates = utl.get_dates(data)
+mv_cali = utl.build_mineable_view(data, cities, dates)
+
+tasas_cali = sirmodel.sir_tasas_init(mv_cali)
+sir_formulas_cali = sirmodel.sir_tasas(tasas_cali, censo_df)
+original_cali, predict_cali = sirpredict.predict(sir_formulas_cali,censo_df)
+
+#------------------------------------------------------------------
+data = pd.DataFrame()
+cities = ["Barranquilla"]
+data =data_org[data_org["Ciudad de ubicación"].isin(cities)]
+data = utl.dates_fix(data)
+data = utl.build_counters(data)
+data = utl.clean_dataset(data)
+cities = utl.get_cities(data)
+dates = utl.get_dates(data)
+mv_bar = utl.build_mineable_view(data, cities, dates)
+
+tasas_bar = sirmodel.sir_tasas_init(mv_bar)
+sir_formulas_bar = sirmodel.sir_tasas(tasas_bar, censo_df)
+original_bar, predict_bar = sirpredict.predict(sir_formulas_bar,censo_df)
+
+#------------------------------------------------------------------
+data = pd.DataFrame()
+cities = ["Cartagena de Indias"]
+data = data_org[data_org["Ciudad de ubicación"].isin(cities)]
+data = utl.dates_fix(data)
+data = utl.build_counters(data)
+data = utl.clean_dataset(data)
+cities = utl.get_cities(data)
+dates = utl.get_dates(data)
+mv_car = utl.build_mineable_view(data, cities, dates)
+
+tasas_car = sirmodel.sir_tasas_init(mv_car)
+sir_formulas_car = sirmodel.sir_tasas(tasas_car, censo_df)
+original_car, predict_car = sirpredict.predict(sir_formulas_car,censo_df)
+
+# ------------------------------------------------------------------
+#%%
+originales_list = [original_car,original_bar,original_cali,original_bog,original_med]
+predichos_list = [predict_car,predict_bar,predict_cali,predict_bog,predict_med]
+
+originales = pd.concat(originales_list)
+predichos = pd.concat(predichos_list)
+
+#%%
+#Visualization
+
+last_update = data['fecha reporte web'].max()
+
+tabtitle = 'Covid-19'
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
-#---
-data = pd.read_csv('data/Casos_positivos_de_COVID-19_en_Colombia.csv')
-city_more_cases = ['Barranquilla', 'Bogotá D.C.', 'Cali', 'Cartagena de Indias', 'Medellín']
-data = data[data['Ciudad de ubicación'].isin(city_more_cases)]
-
-
-data.loc[(data['Fecha de muerte'].notnull() == True) | (data['Fecha recuperado'].notnull() == True), 'recuperado'] = 1 
-data['recuperado'].fillna(0, inplace = True)
-
-data.loc[~(data['Fecha de muerte'].notnull() == True) | ~(data['Fecha recuperado'].notnull() == True), 'infectado'] = 1 
-data['infectado'].fillna(0, inplace = True) 
-
-covid_cases = data.groupby(['Ciudad de ubicación','fecha reporte web']).agg({'infectado':sum,'recuperado':sum}).reset_index()
-covid_cases['fecha reporte web'] = pd.to_datetime(covid_cases['fecha reporte web'],format="%Y-%m-%d")
-
-
-covid_lastcases_med = covid_cases[(covid_cases['Ciudad de ubicación']=='Medellín') \
-                    & (covid_cases['fecha reporte web'] == covid_cases['fecha reporte web'].max())] 
-
-last_update = covid_cases['fecha reporte web'].max()
-
-#----
 app = dash.Dash(__name__,external_stylesheets=external_stylesheets) 
 server = app.server
 app.title=tabtitle
@@ -195,3 +285,5 @@ def update_figure(selected_city):
 
 if __name__ == '__main__':
     app.run_server(debug=True)
+
+# %%
