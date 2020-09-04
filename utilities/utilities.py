@@ -157,6 +157,9 @@ class Utilities:
             
             # Filling city missing
             mv['Ciudad de ubicación'] = i
+
+            # Delete last 3 rows
+            mv.drop(mv.tail(3).index,inplace=True)
             dfs = [mv_final,mv]
             mv_final = pd.concat(dfs)
         
