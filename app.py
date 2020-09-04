@@ -4,6 +4,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 import plotly.express as px
 from dash.dependencies import Input, Output, State
+import plotly.graph_objects as go
 import dash_table
 import base64
 import pandas as pd
@@ -12,6 +13,7 @@ from file_handle import File_Handle
 from SIR_model import SIR
 from SIR_predict import SirPredict
 from utilities.utilities import Utilities 
+import matplotlib.pyplot as plt
 
 #%%
 #Instances
@@ -19,11 +21,12 @@ handle = File_Handle()
 sirmodel = SIR()
 sirpredict = SirPredict()
 utl = Utilities()
+fig = go.Figure()
 
 #%%
 #Downloading data
 handle.download_censo_file()
-handle.download_covid_file()
+file_status = handle.download_covid_file()
 
 #%%
 #Loading data
@@ -156,11 +159,11 @@ app.layout = html.Div(children=[
             ])],id='title')    
         ],id = 'header'),
 
-    dash_table.DataTable(
-            id = 'table',
-            columns = [{'name':i, 'id':i} for i in covid_lastcases_med.columns if file_status == 'sucess'],
-            data=covid_lastcases_med.to_dict('records')
-        ),
+    # dash_table.DataTable(
+    #         id = 'table',
+    #         columns = [{'name':i, 'id':i} for i in originales.columns],
+    #         data=originales.to_dict('records')
+    #     ),
 
     html.A(html.Button('Recarga de información'),href='/',style={
         'margin-left': '0px',
@@ -171,7 +174,7 @@ app.layout = html.Div(children=[
             html.P('Seleccione las ciudades a analizar: ',style={'font-weight': 'bold'}),
         dcc.Checklist(
             id='ciudades_checklist',
-            options = [{'label': str(city), 'value': str(city)} for city in covid_cases['Ciudad de ubicación'].unique()],
+            options = [{'label': str(city), 'value': str(city)} for city in originales['Ciudad de ubicación'].unique()],
             value = ['Medellín'])],
             style = {
             'width': '300px',#'calc(100%-40px)',
@@ -254,32 +257,37 @@ app.layout = html.Div(children=[
         'position': 'relative',
         'box-shadow': '2px 2px 2px lightgrey'})
 
-@app.callback(Output('scatter_infected', 'figure'), [Input('ciudades_checklist', 'value')])
-def update_figure(selected_city):
-    if file_status == 'sucess':
-        filtered_df = covid_cases[covid_cases['Ciudad de ubicación'].isin(selected_city)]
-        fig = px.scatter(filtered_df, x="fecha reporte web", y="infectado",
-                        size="recuperado", color="Ciudad de ubicación",
-                        size_max=35, title='Infectados vs Recuperados a lo largo del tiempo')
-        fig.layout.plot_bgcolor = '#FFFFFF'##DCDCDC'
-        # fig.layout.paper_bgcolor = '#FFFFFF'#'#fff'
-    return fig
+# @app.callback(Output('scatter_infected', 'figure'), [Input('ciudades_checklist', 'value')])
+# def update_figure(selected_city):
+#     if file_status == 'sucess':
+#         filtered_df = originales[originales['Ciudad de ubicación'].isin(selected_city)]
+#         fig = px.scatter(filtered_df, x="t", y="confirmado",
+#                         size="suceptible", color="Ciudad de ubicación",
+#                         size_max=35, title='Infectados vs Recuperados a lo largo del tiempo')
+#         fig.layout.plot_bgcolor = '#FFFFFF'##DCDCDC'
+#         # fig.layout.paper_bgcolor = '#FFFFFF'#'#fff'
+#     return fig
 
 @app.callback(Output('g1', 'figure'), [Input('ciudades_checklist', 'value')])
 def update_figure(selected_city):
     if file_status == 'sucess':
-        filtered_df = covid_cases[covid_cases['Ciudad de ubicación'].isin(selected_city)]
-        fig = px.scatter(filtered_df, x="fecha reporte web", y="infectado",
-                        size="recuperado", color="Ciudad de ubicación",
+        filtered_df = originales[originales['Ciudad de ubicación'].isin(selected_city)]
+        fig = px.scatter(filtered_df, x="t", y="suceptible",
+                        size="confirmado", color="Ciudad de ubicación",
                         size_max=35, title='Infectados vs Recuperados a lo largo del tiempo')
         fig.layout.plot_bgcolor = '#FFFFFF'
     return fig
 
 @app.callback(Output('g2', 'figure'), [Input('ciudades_checklist', 'value')])
+# @app.react('g2',['ciudades_checklist'])
 def update_figure(selected_city):
     if file_status == 'sucess':
-        filtered_df = covid_cases[covid_cases['Ciudad de ubicación'].isin(selected_city)]
-        fig = px.pie(filtered_df, names="Ciudad de ubicación", title= 'Participación por Ciudad')
+        filtered_df_or = originales[originales['Ciudad de ubicación'].isin(selected_city)]
+        filtered_df_pr = predichos[predichos['Ciudad de ubicación'].isin(selected_city)]
+
+        # fig.layout.plot_bgcolor = '#FFFFFF'
+
+        fig = px.pie(filtered_df_or, names="Ciudad de ubicación", title= 'Participación por Ciudad')
 
     return fig
 
