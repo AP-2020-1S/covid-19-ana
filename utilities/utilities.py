@@ -8,25 +8,10 @@ import datetime as dt
 
 
 class Utilities:
-    fileName = "params.dat"
-   
+  
     def __init__(self):
         pass
-    
-    def delete_directoty_content(self, data_path):
-        for f in os.listdir(data_path):
-            os.remove(data_path + f)
-
-    def download(self, url, path, file):
-        wget.download(url, path + file)
-
-    def get_params(self, fileName):
-        params = {}
-        for line in open(fileName):
-            key_value = line.strip().split("|")
-            if not line.startswith("#"): params[key_value[0].strip()] = key_value[1].strip()
-        return params
-    
+       
     # Function to fix dates
     def dates_fix(self,df):
         # Convert dates to datetime
@@ -127,11 +112,6 @@ class Utilities:
             recuperados = recuperados[recuperados['Ciudad de ubicación'] == i].groupby(["Fecha recuperado"]).agg({'Recuperados': 'sum'}).reset_index()
             recuperados['Fecha recuperado'] = recuperados['Fecha recuperado'].dt.date
 
-            # Activos
-            #activos = df
-            #activos['FIS'] = activos['FIS'].dt.date
-            #activos = activos[activos['Ciudad de ubicación'] == i].groupby(["FIS"]).agg({'Activos': 'sum'}).reset_index()
-            
             # Merge
             mv=mv.merge(df_casos, how='left', left_on = "fecha", right_on="FIS")
             mv = mv.groupby(["fecha"]).agg({'Casos': 'sum'}).reset_index()
@@ -139,8 +119,6 @@ class Utilities:
             mv = mv.groupby(["fecha"]).agg({'Casos': 'sum', 'Recuperados': 'sum'}).reset_index()
             mv=mv.merge(muertos, how='left', left_on = "fecha", right_on="Fecha de muerte")
             mv = mv.groupby(["fecha"]).agg({'Casos': 'sum', 'Recuperados': 'sum', 'Muertos': 'sum'}).reset_index()
-            #mv=mv.merge(activos, how='left', left_on = "fecha", right_on="FIS")
-            #mv=mv.merge(df_acumulados, how='left', left_on = "fecha", right_on="FIS")
 
             mv['Casos_Acum'] = mv['Casos'].cumsum()
             mv['Recuperados_Acum'] = mv['Recuperados'].cumsum()
