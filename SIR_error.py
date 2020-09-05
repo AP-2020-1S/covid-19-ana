@@ -278,7 +278,7 @@ print("Intervalo de confianza para suceptibles en Calí con un 95% de conf --> "
 #*-*-*-*-*-*-*-*-**-*-*-*-*-*-*-*-**-*-*-**--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 #*-*-*-*-*-*-*-*-**-*-*-*-*-*-*-*-**-*-*-**--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 y_contagio_original = original_cali_err['contagio'].values
-y_contagio_test = original_cali_err['contagio'].values
+y_contagio_test = predict_cali_test['contagio'].values
 print("RMSE Calí contagios -- > ", round(mean_squared_error(y_contagio_original, y_contagio_test,squared=False),2))
 #*-*-*-*-*-*-*-*-**-*-*-*-*-*-*-*-**-*-*-**--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 # Calculo de los intervalos de confianza para contagios en la ciudad de Calí
@@ -409,7 +409,7 @@ original_car_err = original_car[top_day + 1:]
 # Calculo de RMSE para muertos
 y_muertes_original = original_car_err['muertos'].values
 y_muertes_test = predict_car_test['muertos'].values
-print("RMSE Cartagena muertes -- > ",round(mean_squared_error(y_muertes_original, y_muertes_test,squared=False)))
+print("RMSE Cartagena muertes -- > ",round(mean_squared_error(y_muertes_original, y_muertes_test,squared=False),2))
 #*-*-*-*-*-*-*-*-**-*-*-*-*-*-*-*-**-*-*-**--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 # Calculo de los intervalos de confianza para Muertes en la ciudad de Cartagena
 #consolidacion del DataFrame Orig y Pred
@@ -418,9 +418,9 @@ stdev = np.sqrt(sum((y_muertes_test - y_muertes_original)**2) / (len(y_muertes_o
 mu = np.array(df_Pred_car['muertos'].values).mean()
 print("Intervalo de confianza para muestos en Cartagena con un 95% de conf --> ", ( round(mu - 1.96 * stdev,2),round(mu + 1.96 * stdev,2))," con mu --> ", round(mu,2), " y stdev --> ", round(stdev,2))
 #*-*-*-*-*-*-*-*-**-*-*-*-*-*-*-*-**-*-*-**--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
-y_activo_original = predict_car_test['activo'].values
+y_activo_original = original_car_err['activo'].values
 y_activo_test = predict_car_test['activo'].values
-print("RMSE Cartagena activos -- > ",round(mean_squared_error(y_activo_original, y_activo_test,squared=False),6))
+print("RMSE Cartagena activos -- > ",round(mean_squared_error(y_activo_original, y_activo_test,squared=False),2))
 #*-*-*-*-*-*-*-*-**-*-*-*-*-*-*-*-**-*-*-**--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 # Calculo de los intervalos de confianza para activos en la ciudad de Cartagena
 #consolidacion del DataFrame Orig y Pred
@@ -465,12 +465,5 @@ print("Intervalo de confianza para contagios en Cartagena con un 95% de conf -->
 
 # ****************************************************************#
 
-# %%
-
-# %%
-
-# %%
-
-# %%
 
 # %%

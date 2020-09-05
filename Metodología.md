@@ -214,24 +214,28 @@ La predicción de los números de suceptibles, muertos,  contagios, recuperados 
 
 En esta etapa se revisa los resultados obtenidos en la ejecución del modelo, con el fin de evaluar las métricas de desempeño que arroja el modelo y determinar si este cumple con los objetivos propuestos.
 
-Despues de desarrollar el modelo SIRD, mediante el calculo de medias moviles en cada uno de los dias a pronosticar, se desarrollo la siguiente tecnica para realizar la evaluación del modelo. 
+Después de desarrollar el modelo SIRD, mediante el cálculo de medias móviles en cada uno de los días a pronosticar, se desarrollo la siguiente técnica para realizar la evaluación del modelo. 
 
 1. Partición de data.
-Se tomo la data generada en la etapa de preparación de datos y se crearon dos dataset, realizando una division a partir de los ultimos 30 dias, contenidos en la información disponible. La primera porsión de datos se destino para realizar la predicción y la segunda la cual contiene los ultimos 30 días fue utilizada como data de contraste con la prediccion que arroja el modelo. Teniendo los 30 días seleccionados como data real y los 30 dias como resultado del modelo, se procedio a calcular el RMSE (Error Cuadratico Medio) para cada modelado realizado por Ciudad y Variable a estimar (muertos,activos,confirmados,suceptibles,contagiados). 
+Se tomo la data generada en la etapa de preparación de datos y se crearon dos dataset, realizando una división a partir de los últimos 30 días, contenidos en la información disponible. La primera porción de datos se destino para realizar la predicción y la segunda la cual contiene los últimos 30 días fue utilizada como data de contraste con la predicción que arroja el modelo. 
+
+2. Calculo del error.
+Teniendo los 30 días seleccionados como data real y los 30 días como resultado del modelo, se procedió a calcular el RMSE (Error Cuadrático Medio) para cada modelado realizado por Ciudad y Variable a estimar (muertos,activos,confirmados,susceptibles,contagiados). 
 
 Se hallaron los siguientes resultados.
 
 #### Calculos RMSE
+<p align = "center" >
+|![Alt text](img/RMSE_med.JPG)|![Alt text](img/RMSE_bog.JPG)|
 
-![Alt text](img/RMSE_med.JPG)
+|![Alt text](img/RMSE_cali.JPG)|![Alt text](img/RMSE_bar.JPG)|
 
-![Alt text](img/RMSE_bog.JPG)
+|![Alt text](img/RMSE_car.JPG)||
+</p>
 
-![Alt text](img/RMSE_cali.JPG)
+3. Conclusiones de la evaluación.
+El error cuadrático medio (RMSE) mide la cantidad de error que hay entre dos conjuntos de datos. Compara un valor predicho contra un valor observado o conocido. Para las cinco ciudades que se están estudiando y para cada una de las variables estudiadas, aunque vemos una tendencia adecuada en los datos, se observan valores altos en sus errores, esto se puede explicar debido a la metodología utilizada en el modelo SIRD, donde las medias móviles suavizan las tendencias perdiendo así precisión en la estimación.
 
-![Alt text](img/RMSE_bar.JPG)
-
-![Alt text](img/RMSE_car.JPG)
 
 
 
