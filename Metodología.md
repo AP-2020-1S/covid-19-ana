@@ -156,7 +156,7 @@ Se realizó una aproximación con este método para determinar los casos confirm
 
 #### Infectados acumulados por día
 <p align = "center" >
-  <img src="img/Infectados_acumulados_logistica.PNG" alt="Infectados Acumulados por día" width="300px" height="300px"/>
+  <img src="img/Infectados_acumulados_logistica.PNG" alt="Infectados Acumulados por día" width="400px" height="300px"/>
 </p>
 
 Como se puede observar, la aproximación usando la función logística supuso un ajuste significativo para este caso. Sin embargo, al repetir el ejercicio con otras variables como recuperados o fallecidos, la función no se ajustó, por lo cual se descartó su uso.
