@@ -151,6 +151,14 @@ En la fase de modelamiento se evaluan las diferentes técnicas que de acuerdo a 
 Función mantemática usada en diferentes modelos de crecimiento poblacional, propagación de enfermedades epidémicas. Se caracteriza por un crecimiento incremental al inicio y luego decrecer en un estado del tiempo, dicho crecimiento es carecterizado por la fórmula:
 ![log_formula](https://miro.medium.com/max/536/1*ktniY6tA5bAZrhRTkyWEBg.png)
 
+
+Se realizó una aproximación con este método para determinar los casos confirmados en el tiempo. A continuación se muestra el resultado obtenido:
+
+![Alt text](img/Infectados_acumulados_logistica.PNG)
+Infectados acumulados por día
+
+Como se puede observar, la aproximación usando la función logística supuso un ajuste significativo para este caso. Sin embargo, al repetir el ejercicio con otras variables como recuperados o fallecidos, la función no se ajustó, por lo cual se descartó su uso.
+
 #### ARIMA
 
 #### Librería Prophet
