@@ -122,10 +122,20 @@ predichos_list = [predict_car,predict_bar,predict_cali,predict_bog,predict_med]
 originales = pd.concat(originales_list)
 predichos = pd.concat(predichos_list)
 
+corto_plazo = predichos.head(5)
+corto_plazo = corto_plazo['t'].tail(1)
+mediano_plano = predichos.iloc[5:15]
+mediano_plano = mediano_plano['t'].tail(1)
+largo_plazo = predichos.tail(20)
+largo_plazo = largo_plazo['t'].tail(1)
+ 
+
+
 #%%
 #Visualization
 
 last_update = data['fecha reporte web'].max()
+las_t = originales['t'].max()
 
 tabtitle = 'Covid-19'
 
@@ -155,7 +165,8 @@ app.layout = html.Div(children=[
             style ={
                 'font-size': '15px', 'text-align': 'justify'
             }),
-            html.Label(['Fecha de última carga, ', last_update])
+            html.Label(['Fecha de última carga, ', last_update]),
+            html.Label(['Número de días correspondiente a la fecha de última carga (t), ', las_t])
             ])],id='title')    
         ],id = 'header'),
 
@@ -172,10 +183,10 @@ app.layout = html.Div(children=[
     html.Div([
         html.Div([
             html.P('Seleccione las ciudades a analizar: ',style={'font-weight': 'bold'}),
-        dcc.Checklist(
+        dcc.RadioItems(
             id='ciudades_checklist',
             options = [{'label': str(city), 'value': str(city)} for city in originales['Ciudad de ubicación'].unique()],
-            value = ['Medellín'])],
+            value = 'Medellín')],
             style = {
             'width': '300px',#'calc(100%-40px)',
             'border-radius': '5px',
@@ -187,6 +198,18 @@ app.layout = html.Div(children=[
             })
             # labelStyle={'display': 'inline-block'}    
         ],id='filter'),
+
+    dcc.Graph(
+        id='g0',
+        style = {
+        'width': 'calc(100%-40px)',
+        'border-radius': '5px',
+        'background-color': '#FFFFFF',
+        'margin': '10px',
+        'padding': '15px',
+        'position': 'relative',
+        'box-shadow': '2px 2px 2px lightgrey'}
+    ),
 
     html.Div([
         html.Div([dcc.Graph(id='g1')],
@@ -200,7 +223,7 @@ app.layout = html.Div(children=[
         className="six columns"),
 
         html.Div([
-            dcc.Graph(id='g2', figure={'data': [{'y': [1, 2, 3]}]})
+            dcc.Graph(id='g2')
         ], 
         style = {
         'border-radius': '5px',
@@ -210,24 +233,63 @@ app.layout = html.Div(children=[
         'position': 'relative',
         'box-shadow': '2px 2px 2px lightgrey'},
         className="six columns"),
+
+        html.Div([
+            dcc.Graph(id='g3')
+        ], 
+        style = {
+        'border-radius': '5px',
+        'background-color': '#FFFFFF',
+        'margin': '10px',
+        'padding': '15px',
+        'position': 'relative',
+        'box-shadow': '2px 2px 2px lightgrey'},
+        className="six columns"),
+
+        html.Div([
+            dcc.Graph(id='g4')
+        ], 
+        style = {
+        'border-radius': '5px',
+        'background-color': '#FFFFFF',
+        'margin': '10px',
+        'padding': '15px',
+        'position': 'relative',
+        'box-shadow': '2px 2px 2px lightgrey'},
+        className="six columns"),
+
+        html.Div([
+            dcc.Graph(id='g5')
+        ], 
+        style = {
+        'border-radius': '5px',
+        'background-color': '#FFFFFF',
+        'margin': '10px',
+        'padding': '15px',
+        'position': 'relative',
+        'box-shadow': '2px 2px 2px lightgrey'},
+        className="six columns"),
+
+        # html.Div([
+        # dcc.Graph(id='g6', figure={'data': 
+        #         [
+        #             go.Scatter(
+
+        #         x = plazos.iloc[i]['t'],
+        #         y = plazos.iloc[i]['activo'],
+        #         mode = "lines",
+        #         # name = rowname
+        #         )for i in plazos.index
+        # ]
+        # })]), 
+        
+
     ], style = {
         'width': '100%',
         'border-radius': '5px',
         'padding': '15px',
         
         }, className="row"),
-
-    dcc.Graph(
-        id='scatter_infected',
-        style = {
-        'width': 'calc(100%-40px)',
-        'border-radius': '5px',
-        'background-color': '#FFFFFF',
-        'margin': '10px',
-        'padding': '15px',
-        'position': 'relative',
-        'box-shadow': '2px 2px 2px lightgrey'}
-    ),
 
     html.Div([
         html.Div([
@@ -257,39 +319,188 @@ app.layout = html.Div(children=[
         'position': 'relative',
         'box-shadow': '2px 2px 2px lightgrey'})
 
-# @app.callback(Output('scatter_infected', 'figure'), [Input('ciudades_checklist', 'value')])
-# def update_figure(selected_city):
-#     if file_status == 'sucess':
-#         filtered_df = originales[originales['Ciudad de ubicación'].isin(selected_city)]
-#         fig = px.scatter(filtered_df, x="t", y="confirmado",
-#                         size="suceptible", color="Ciudad de ubicación",
-#                         size_max=35, title='Infectados vs Recuperados a lo largo del tiempo')
-#         fig.layout.plot_bgcolor = '#FFFFFF'##DCDCDC'
-#         # fig.layout.paper_bgcolor = '#FFFFFF'#'#fff'
-#     return fig
+@app.callback(Output('g0', 'figure'), [Input('ciudades_checklist', 'value')])
+def update_figure(selected_city):
+
+    if file_status == 'sucess':
+        filtered_df_orig = originales[originales['Ciudad de ubicación'] == selected_city]
+
+        fig = px.line(filtered_df_orig, x='t', y='activo', 
+            labels={
+            "t": "Tiempo (t)",
+            "activo": "Población"}, title='Comportamiento Real a lo largo del tiempo del Covid-19')
+        fig.add_scatter(x=filtered_df_orig['t'], y=filtered_df_orig['confirmado'], mode = 'lines', name='Nuevos Casos')
+        fig.add_scatter(x=filtered_df_orig['t'], y=filtered_df_orig['total_rec'], mode = 'lines', name='Recuperados')
+        fig.add_scatter(x=filtered_df_orig['t'], y=filtered_df_orig['muertos'], mode = 'lines', name='Muertos')
+
+
+        fig.update_layout(
+            legend=dict(
+            # x=0,
+            # y=1,
+            traceorder="reversed",
+            bgcolor="aliceblue",
+            bordercolor="aliceblue",
+            borderwidth=2
+            )
+        )
+
+        fig.layout.plot_bgcolor = '#FFFFFF'##DCDCDC'
+    return fig
 
 @app.callback(Output('g1', 'figure'), [Input('ciudades_checklist', 'value')])
 def update_figure(selected_city):
+
     if file_status == 'sucess':
-        filtered_df = originales[originales['Ciudad de ubicación'].isin(selected_city)]
-        fig = px.scatter(filtered_df, x="t", y="suceptible",
-                        size="confirmado", color="Ciudad de ubicación",
-                        size_max=35, title='Infectados vs Recuperados a lo largo del tiempo')
-        fig.layout.plot_bgcolor = '#FFFFFF'
+        filtered_df_orig = originales[originales['Ciudad de ubicación'] == selected_city]
+        filtered_df_pred = predichos[predichos['Ciudad de ubicación'] == selected_city]
+
+        fig = px.line(filtered_df_orig, x='t', y='activo', 
+        labels={
+                     "t": "Tiempo (t)",
+                     "activo": "Población"
+            }, title='Casos Activos')
+        fig.add_traces(go.Scatter(x=filtered_df_pred['t'], y=filtered_df_pred['activo'], mode = 'lines',name='Predicho'))
+        fig.add_trace(go.Scatter(x=[int(corto_plazo), int(corto_plazo)], y=[0, 4000], mode="lines", name="Corto Plazo", line = dict(dash='dot')))
+        fig.add_trace(go.Scatter(x=[int(mediano_plano), int(mediano_plano)], y=[0, 4000], mode="lines", name="Mediano Plazo",line = dict(dash='dot')))
+        fig.add_trace(go.Scatter(x=[int(largo_plazo), int(largo_plazo)], y=[0, 4000], mode="lines", name="Largo Plazo",line = dict(dash='dot')))
+
+        fig.update_layout(
+            legend=dict(
+            # x=0,
+            # y=1,
+            traceorder="reversed",
+            bgcolor="aliceblue",
+            bordercolor="aliceblue",
+            borderwidth=2
+            )
+        )
+
+        fig.layout.plot_bgcolor = '#FFFFFF'##DCDCDC'
     return fig
+
+
 
 @app.callback(Output('g2', 'figure'), [Input('ciudades_checklist', 'value')])
-# @app.react('g2',['ciudades_checklist'])
 def update_figure(selected_city):
     if file_status == 'sucess':
-        filtered_df_or = originales[originales['Ciudad de ubicación'].isin(selected_city)]
-        filtered_df_pr = predichos[predichos['Ciudad de ubicación'].isin(selected_city)]
+        filtered_df_orig = originales[originales['Ciudad de ubicación'] == selected_city]
+        filtered_df_pred = predichos[predichos['Ciudad de ubicación'] == selected_city]
 
-        # fig.layout.plot_bgcolor = '#FFFFFF'
+        fig = px.line(filtered_df_orig, x='t', y='activo', 
+            labels={
+                     "t": "Tiempo (t)",
+                     "activo": "Población"
+            }, title='Casos Confirmados')
+        fig.add_traces(go.Scatter(x=filtered_df_pred['t'], y=filtered_df_pred['activo'], name='Predicho'))
+        fig.add_trace(go.Scatter(x=[int(corto_plazo), int(corto_plazo)], y=[0, 4000], mode="lines", name="Corto Plazo", line = dict(dash='dot')))
+        fig.add_trace(go.Scatter(x=[int(mediano_plano), int(mediano_plano)], y=[0, 4000], mode="lines", name="Mediano Plazo",line = dict(dash='dot')))
+        fig.add_trace(go.Scatter(x=[int(largo_plazo), int(largo_plazo)], y=[0, 4000], mode="lines", name="Largo Plazo",line = dict(dash='dot')))
 
-        fig = px.pie(filtered_df_or, names="Ciudad de ubicación", title= 'Participación por Ciudad')
+        fig.update_layout(
+            legend=dict(
+            # x=0,
+            # y=1,
+            traceorder="reversed",
+            bgcolor="aliceblue",
+            bordercolor="aliceblue",
+            borderwidth=2
+            )
+        )
 
+        fig.layout.plot_bgcolor = '#FFFFFF'##DCDCDC'
     return fig
+
+@app.callback(Output('g3', 'figure'), [Input('ciudades_checklist', 'value')])
+def update_figure(selected_city):
+    if file_status == 'sucess':
+        filtered_df_orig = originales[originales['Ciudad de ubicación'] == selected_city]
+        filtered_df_pred = predichos[predichos['Ciudad de ubicación'] == selected_city]
+
+        fig = px.line(filtered_df_orig, x='t', y='total_rec', 
+        labels={
+                     "t": "Tiempo (t)",
+                     "activo": "Población"
+            }, title= 'Recuperados')
+        fig.add_traces(go.Scatter(x=filtered_df_pred['t'], y=filtered_df_pred['total_rec'], name='Predicho'))
+        fig.add_trace(go.Scatter(x=[int(corto_plazo), int(corto_plazo)], y=[0, 4000], mode="lines", name="Corto Plazo", line = dict(dash='dot')))
+        fig.add_trace(go.Scatter(x=[int(mediano_plano), int(mediano_plano)], y=[0, 4000], mode="lines", name="Mediano Plazo",line = dict(dash='dot')))
+        fig.add_trace(go.Scatter(x=[int(largo_plazo), int(largo_plazo)], y=[0, 4000], mode="lines", name="Largo Plazo",line = dict(dash='dot')))
+
+        fig.update_layout(
+        legend=dict(
+        # x=0,
+        # y=1,
+        traceorder="reversed",
+        bgcolor="aliceblue",
+        bordercolor="aliceblue",
+        borderwidth=2
+        )
+    )
+
+        fig.layout.plot_bgcolor = '#FFFFFF'##DCDCDC'
+    return fig
+
+@app.callback(Output('g4', 'figure'), [Input('ciudades_checklist', 'value')])
+def update_figure(selected_city):
+    if file_status == 'sucess':
+        filtered_df_orig = originales[originales['Ciudad de ubicación'] == selected_city]
+        filtered_df_pred = predichos[predichos['Ciudad de ubicación'] == selected_city]
+
+        fig = px.line(filtered_df_orig, x='t', y='muertos', 
+        labels={
+                     "t": "Tiempo (t)",
+                     "activo": "Población"
+            }, title= 'Muertos')
+        fig.add_traces(go.Scatter(x=filtered_df_pred['t'], y=filtered_df_pred['muertos'], name='Predicho'))
+        fig.add_trace(go.Scatter(x=[int(corto_plazo), int(corto_plazo)], y=[0, 8], mode="lines", name="Corto Plazo", line = dict(dash='dot')))
+        fig.add_trace(go.Scatter(x=[int(mediano_plano), int(mediano_plano)], y=[0, 8], mode="lines", name="Mediano Plazo",line = dict(dash='dot')))
+        fig.add_trace(go.Scatter(x=[int(largo_plazo), int(largo_plazo)], y=[0, 8], mode="lines", name="Largo Plazo",line = dict(dash='dot')))
+
+        fig.update_layout(
+            legend=dict(
+            # x=0,
+            # y=1,
+            traceorder="reversed",
+            bgcolor="aliceblue",
+            bordercolor="aliceblue",
+            borderwidth=2
+            )
+        )
+
+        fig.layout.plot_bgcolor = '#FFFFFF'##DCDCDC'
+    return fig
+
+@app.callback(Output('g5', 'figure'), [Input('ciudades_checklist', 'value')])
+def update_figure(selected_city):
+    if file_status == 'sucess':
+        filtered_df_orig = originales[originales['Ciudad de ubicación'] == selected_city]
+        filtered_df_pred = predichos[predichos['Ciudad de ubicación'] == selected_city]
+
+        fig = px.line(filtered_df_orig, x='t', y='confirmado', 
+        labels={
+                     "t": "Tiempo (t)",
+                     "activo": "Población"
+            }, title='Nuevos Casos')
+        fig.add_traces(go.Scatter(x=filtered_df_pred['t'], y=filtered_df_pred['confirmado'], name='Predicho'))
+        fig.add_trace(go.Scatter(x=[int(corto_plazo), int(corto_plazo)], y=[0, 6000], mode="lines", name="Corto Plazo", line = dict(dash='dot')))
+        fig.add_trace(go.Scatter(x=[int(mediano_plano), int(mediano_plano)], y=[0, 6000], mode="lines", name="Mediano Plazo",line = dict(dash='dot')))
+        fig.add_trace(go.Scatter(x=[int(largo_plazo), int(largo_plazo)], y=[0, 6000], mode="lines", name="Largo Plazo",line = dict(dash='dot')))
+
+        fig.update_layout(
+            legend=dict(
+            # x=0,
+            # y=1,
+            traceorder="reversed",
+            bgcolor="aliceblue",
+            bordercolor="aliceblue",
+            borderwidth=2
+            )
+        )
+
+        fig.layout.plot_bgcolor = '#FFFFFF'##DCDCDC'
+    return fig
+
 
 if __name__ == '__main__':
     app.run_server(debug=True)

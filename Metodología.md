@@ -144,4 +144,4 @@ En esta fase se busca entregar los resulados de la solución a la organización
 
 Para el despliegue se creo un dashboard utilizando el framework de Python, Dash. 
 La exposición en internet fue usando heroku, la cual es una plataforma como servicio de computación en la nube
-Para visualizar el dashboard se puede consultar [Predicción Covid-19 Colombia]()
+Para visualizar el dashboard se puede consultar [Predicción Covid-19 Colombia](https://covid-19-colombia.herokuapp.com)
