@@ -232,7 +232,7 @@ La predicción de los números de suceptibles, muertos,  contagios, recuperados 
   Ejemplo del comportamieto real para los casos activos más predicción a corto, mediano, largo plazo en Medellín
 
 <p align = "center" >
-  <img src="img/activos_med.png" alt="Predección Medellín" width="400px" height="200px"/>
+  <img src="img/activos_med.png" alt="Predección Medellín"/>
 </p>
 
 
