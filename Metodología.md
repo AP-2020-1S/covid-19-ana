@@ -173,7 +173,7 @@ Se realizó una aproximación con este método para determinar los casos confirm
 
 Como se puede observar, la aproximación usando la función logística supuso un ajuste significativo para este caso. Sin embargo, al repetir el ejercicio con otras variables como recuperados o fallecidos, la función no se ajustó, por lo cual se descartó su uso.
 
-#### ARIMA
+#### Librería Prophet
 
 ### Librería Prophet
 La libreria de codigo abierto [Prophet](https://facebook.github.io/prophet/#:~:text=Forecasting%20at%20scale.-,Prophet%20is%20a%20forecasting%20procedure%20implemented%20in%20R%20and%20Python,by%20data%20scientists%20and%20analysts.&text=Prophet%20is%20open%20source%20software,download%20on%20CRAN%20and%20PyPI.) desarrollada por facebook permite realizar pronosticos de series de tiempo basada en un [modelo aditivo](https://en.wikipedia.org/wiki/Additive_model#:~:text=In%20statistics%2C%20an%20additive%20model,class%20of%20nonparametric%20regression%20models.) donde las tendencias no lineales se ajustan con una estacionalidad anual, semanal o diaria. Es robsta para el manejo series con estacionalidades y data incompleta y por lo general maneja adecuadamente la ocurrencia de outliers. 
@@ -194,8 +194,8 @@ Los modelos epidemiológico suponen una serie de supuestos, los cuales se detall
 
   * La interacción entre los individuos es aleatoria.
   * Las personas recuperadas no se reinfectan.
-  * No se tiene en cuenta que la población $N$ es variable debido a fenómenos como nacimientos y muertes por otras causas y viajes al extranjero.
-  * El modelo no tiene en cuenta que al saturarse el sistema de salud, la tasa de mortalidad \mu tiende a crecer.
+  * No se tiene en cuenta que la población $\N$ es variable debido a fenómenos como nacimientos y muertes por otras causas y viajes al extranjero.
+  * El modelo no tiene en cuenta que al saturarse el sistema de salud, la tasa de mortalidad $\mu$ tiende a crecer.
   * El modelo no tiene en cuenta las medidas tomadas por el gobierno Nacional.
 
 Para la predicción de la tendencia de Covid-19 en Colombia, se incluye un estado adicional que son los difuntos (clase D). Estos modelos epidemiológicos se rigen por una serie de ecuaciones diferenciales  
@@ -204,10 +204,10 @@ Para la predicción de la tendencia de Covid-19 en Colombia, se incluye un estad
   <img src="img/SIRD.png" alt="Ecuaciones Diferenciales SIRD" width="400px" height="300px"/>
 </p>
 
-Donde $N$ corresponde a la población general, \beta corresponde a la tasa de transmisión de la enfermedad es decir, el número promedio de individuos susceptibles que una persona infectada contagia por día. Esta variable depende del grado de distanciamiento social y de las prácticas higiénicas que adopte la población. Poco distanciamiento social y malas prácticas higiénicas se reflejan en un \beta alto. 
+Donde $N$ corresponde a la población general, $\beta$ corresponde a la tasa de transmisión de la enfermedad es decir, el número promedio de individuos susceptibles que una persona infectada contagia por día. Esta variable depende del grado de distanciamiento social y de las prácticas higiénicas que adopte la población. Poco distanciamiento social y malas prácticas higiénicas se reflejan en un $\beta$ alto. 
 
-\gamma, corresponde a la tasa de recuperación, la cual representa la tasa de personas infectadas que se recuperan y dejan de ser contagiosas.
-\mu es la tasa de mortalidad, la cual representa la tasa de personas infectadas que mueren.
+$\gamma$, corresponde a la tasa de recuperación, la cual representa la tasa de personas infectadas que se recuperan y dejan de ser contagiosas.
+$\mu$ es la tasa de mortalidad, la cual representa la tasa de personas infectadas que mueren.
 
 
 ##### Predicción de Covid-19 en Colombia usando el modelo SIRD
@@ -216,24 +216,24 @@ Para la prediccion del Covid-19 en las principales ciudades de Colombia se lleva
 
 Para cada una de las ciudades se calcularon:
   * Tiempo como número de días, a partir de la fecha de inicio de síntomas 
-  * Tasa de contagio (\beta), Tasa de recuperación (\gamma) y tasa de muerte (\mu) a nivel de día, partiendo de la información actual y acumulada. Para el tiempo 0 se tomo como refencia un (\beta) = 0.05, (\gamma)=0.02 y (\mu) = 0.005. Estos valores de acuerdo a lo encontrado en la literatura para el Covid-19 o similares.
+  * Tasa de contagio ($\beta$), Tasa de recuperación ($\gamma$) y tasa de muerte ($\mu$) a nivel de día, partiendo de la información actual y acumulada. Para el tiempo 0 se tomo como refencia un ($\beta$) = 0.05, ($\gamma$)=0.02 y ($\mu$) = 0.005. Estos valores de acuerdo a lo encontrado en la literatura para el Covid-19 o similares.
   * Con las tasas anteriores y teniendo la información historica del comportamiento del virus, se procede a reemplazar los valores en las ecuaciones diferenciales que sigue el modelo. Con esto se halla los números de suceptibles,  muertos,  contagios,  recuperados e infectados diariamente.
 
 Ejemplo del comportamiento del virus en Medellín, a partir de la información real
 
 <p align = "center" >
-  <img src="img/med.png" alt="Comportamiento Medellín" width="400px" height="300px"/>
+  <img src="img/med.png" alt="Comportamiento Medellín"/>
 </p>
 
 La predicción de los números de suceptibles, muertos,  contagios, recuperados e infectados, se abordó bajo la siguiente metodología:
   * Se busca predecir el corto, mediano y largo plazo, definiendo como corto plazo 5 días, mediano plazo 10 días y largo plazo 15 días.
-  * La predicción de las tasas de contagio (\beta), tasas de recuperación (\gamma) y tasas de muerte (\mu) se realizó a partir del cálculo de medias moviles de los últimos 5 días, se probaron diferentes días y se tomo 5 como el número óptimo para el cálculo de medias moviles.
+  * La predicción de las tasas de contagio ($\beta$), tasas de recuperación ($\gamma$) y tasas de muerte ($\mu$) se realizó a partir del cálculo de medias moviles de los últimos 5 días, se probaron diferentes días y se tomo 5 como el número óptimo para el cálculo de medias moviles.
   * Con estas tasas calculas se procede a reemplazar las ecuaciones diferenciales del modelo y con esto se determina el comportamiento del virus en cada una de las cinco ciudades.
 
   Ejemplo del comportamieto real para los casos activos más predicción a corto, mediano, largo plazo en Medellín
 
 <p align = "center" >
-  <img src="img/activos_med.png" alt="Predección Medellín" width="400px" height="300px"/>
+  <img src="img/activos_med.png" alt="Predección Medellín" width="400px" height="200px"/>
 </p>
 
 
