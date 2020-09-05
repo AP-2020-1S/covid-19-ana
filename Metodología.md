@@ -96,7 +96,7 @@ Se realizó un análisis exploratorio de los datos y el detalle se puede encontr
 
 #### Comparación entre las 5 ciudades con mas casos
 <p align = "center" >
-  <img src="img/pieCiudades.JPG" alt="alt" height="300px"  width="300px"/>
+  <img src="img/pieCiudades.JPG" alt="alt" height="300px"  width="400px"/>
 </p>
 
 #### Estados de la infección por ciudad
@@ -109,7 +109,7 @@ Se realizó un análisis exploratorio de los datos y el detalle se puede encontr
 
 #### Tabla comparativa
 <p align = "center" >
-  <img src="img/compara.JPG" alt="alt" height="300px"/>
+  <img src="img/compara.JPG" alt="alt" />
 </p>
 
 Nota: La columna ERR cuenta los registros que originalmente tenian fecha de recuperado y fecha de muerte simultaneamente.
@@ -184,6 +184,7 @@ Con los muertos ocurre una situación similar, la tendencia crece indefinidament
 <p align = "center" >
   <img src="img/prophetMuert.JPG" alt="alt" height="300px"/>
 </p>
+Por lo anterior consideramos que por la libreria Prophet y las series de tiempo no tenemos un modelo adecuado
 
 #### SIRD (Suceptible - Infectado - Recuperado - Difuntos)
 
