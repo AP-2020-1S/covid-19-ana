@@ -51,6 +51,8 @@ En esta fase se explora las fuentes de datos a utilizar para el desarrollo del p
 
 El comportamiento del Covid-19 en las principales ciudades de Colombia esta siendo recolectado y centralizado por el Instituto Nacional de Salud. Esta información esta siendo puesta a disposición del público general, a través de la página web [www.datos.gov.co](https://www.datos.gov.co/Salud-y-Protecci-n-Social/Casos-positivos-de-COVID-19-en-Colombia/gt2j-8ykr/data)
 
+Adicionalmente utilizamos la información del censo proyectado por el DANE el cual se puede encontrar en la página web [PROYECCIONES Y RETROPROYECCIONES DE POBLACIÓN](https://www.dane.gov.co/index.php/estadisticas-por-tema/demografia-y-poblacion/proyecciones-de-poblacion)
+
 ### Diccionario de datos
 
 #### Casos positivos diarios de Covid-19 en Colombia
@@ -143,17 +145,20 @@ Dado que se tienen varios casos encontrados en los hallazgos, a continuación se
 
 En la fase de modelamiento se evaluan las diferentes técnicas que de acuerdo a la literatura y conocimiento previo tengan una aproximación significativa a la solución del objetivo de mineria de datos. Se selecciona la técnica que más se ajusta, para luego construir el modelo y ejecutarlo.
 
-### Técnicas utilizadas
+### Técnicas evaluadas
 
-### SIR (Suceptible - Infectado - Recuperado o Muerto)
+#### SIR (Suceptible - Infectado - Recuperado o Muerto)
 
 #### Modelo lógistico
-
 Función mantemática usada en diferentes modelos de crecimiento poblacional, propagación de enfermedades epidémicas. Se caracteriza por un crecimiento incremental al inicio y luego decrecer en un estado del tiempo, dicho crecimiento es carecterizado por la fórmula:
 ![log_formula](https://miro.medium.com/max/536/1*ktniY6tA5bAZrhRTkyWEBg.png)
 
+#### ARIMA
 
-#### Redes Neuronales 
+#### Librería Prophet
+La libreria de codigo abierto [Prophet](https://facebook.github.io/prophet/#:~:text=Forecasting%20at%20scale.-,Prophet%20is%20a%20forecasting%20procedure%20implemented%20in%20R%20and%20Python,by%20data%20scientists%20and%20analysts.&text=Prophet%20is%20open%20source%20software,download%20on%20CRAN%20and%20PyPI.) desarrollada por facebook permite realizar pronosticos de series de tiempo basada en un [modelo aditivo](https://en.wikipedia.org/wiki/Additive_model#:~:text=In%20statistics%2C%20an%20additive%20model,class%20of%20nonparametric%20regression%20models.) donde las tendencias no lineales se ajustan con una estacionalidad anual, semanal o diaria. Es robsta para el manejo series con estacionalidades y data incompleta y por lo general maneja adecuadamente la ocurrencia de outliers. 
+
+
 
 # Evaluación 
 
