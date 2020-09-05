@@ -49,13 +49,13 @@ El objetivo de este proyecto es la predicción de corto y mediano plazo del tota
 
 En esta fase se explora las fuentes de datos a utilizar para el desarrollo del proyecto, se describen los datos, se exploran y se verifica la calidad de los mismos.
 
+## Fuentes de datos
+
+#### Covid-19
+
 El comportamiento del Covid-19 en las principales ciudades de Colombia esta siendo recolectado y centralizado por el Instituto Nacional de Salud. Esta información esta siendo puesta a disposición del público general, a través de la página web [www.datos.gov.co](https://www.datos.gov.co/Salud-y-Protecci-n-Social/Casos-positivos-de-COVID-19-en-Colombia/gt2j-8ykr/data)
 
-Adicionalmente utilizamos la información del censo proyectado por el DANE el cual se puede encontrar en la página web [PROYECCIONES Y RETROPROYECCIONES DE POBLACIÓN](https://www.dane.gov.co/index.php/estadisticas-por-tema/demografia-y-poblacion/proyecciones-de-poblacion)
-
-### Diccionario de datos
-
-#### Casos positivos diarios de Covid-19 en Colombia
+##### Diccionario de datos
 
 |**Campo**                             |**Tipo de dato** |
 |---------                             | --------------- |
@@ -82,6 +82,12 @@ Adicionalmente utilizamos la información del censo proyectado por el DANE el cu
 |Codigo pais                           | Número          |
 |Pertenencia etnica                    | Texto           |
 |Nombre grupo etnico                   | Texto           |
+
+#### Datos Poblacionales - Dane
+
+Para la información poblacional se utilizó la información del censo proyectado por el DANE para el año 2020, el cual se puede encontrar en la página web [Proyecciones y retroproyecciones de población](https://www.dane.gov.co/index.php/estadisticas-por-tema/demografia-y-poblacion/proyecciones-de-poblacion)
+
+## Análisis exploratorio
 
 Se realizó un análisis exploratorio de los datos y el detalle se puede encontrar en el siguiente vínculo:
 [Análisis descriptivo](docs/Análisis_descriptivo_Covid.ipynb)
@@ -134,7 +140,7 @@ Dado que se tienen varios casos encontrados en los hallazgos, a continuación se
 
 4. Dado que se encontró que para los ultimos días, por cada ciudad, días sin casos o con casos muy diferentes a su tendencia diria, se tomó la decisión de eliminar los ultimos 3 días por cada ciudad. 
 
-#### Derivación de nuevos atributos
+##### Derivación de nuevos atributos
 
 1. Para hacer conteos de contagios, recuperados, muertos, activos  y casos confirmados, se toma la decisión de generar variables de conteo teniendo como referencia las fechas.
 
@@ -154,7 +160,7 @@ Función mantemática usada en diferentes modelos de crecimiento poblacional, pr
 
 Se realizó una aproximación con este método para determinar los casos confirmados en el tiempo. A continuación se muestra el resultado obtenido:
 
-#### Infectados acumulados por día
+##### Infectados acumulados por día
 <p align = "center" >
   <img src="img/Infectados_acumulados_logistica.PNG" alt="Infectados Acumulados por día" width="400px" height="300px"/>
 </p>
@@ -163,10 +169,10 @@ Como se puede observar, la aproximación usando la función logística supuso un
 
 #### ARIMA
 
-#### Librería Prophet
+### Librería Prophet
 La libreria de codigo abierto [Prophet](https://facebook.github.io/prophet/#:~:text=Forecasting%20at%20scale.-,Prophet%20is%20a%20forecasting%20procedure%20implemented%20in%20R%20and%20Python,by%20data%20scientists%20and%20analysts.&text=Prophet%20is%20open%20source%20software,download%20on%20CRAN%20and%20PyPI.) desarrollada por facebook permite realizar pronosticos de series de tiempo basada en un [modelo aditivo](https://en.wikipedia.org/wiki/Additive_model#:~:text=In%20statistics%2C%20an%20additive%20model,class%20of%20nonparametric%20regression%20models.) donde las tendencias no lineales se ajustan con una estacionalidad anual, semanal o diaria. Es robsta para el manejo series con estacionalidades y data incompleta y por lo general maneja adecuadamente la ocurrencia de outliers. 
 
-### SIRD (Suceptible - Infectado - Recuperado - Difuntos)
+#### SIRD (Suceptible - Infectado - Recuperado - Difuntos)
 
 Los modelos basados en SIR asumen que la infección se propaga a través de varios grupos, por ejemplo, susceptibles, expuestos, infectados, recuperados, fallecidos e inmunes. Para los modelos estándar basados en SIR se tiene que una epidemia incluye susceptibles a la infección (clase S), infectados (clase I) y la población eliminada (clase R).
 
@@ -175,17 +181,19 @@ Los modelos epidemiológico suponen una serie de supuestos, los cuales se detall
   * La interacción entre los individuos es aleatoria.
   * Las personas recuperadas no se reinfectan.
   * No se tiene en cuenta que la población $N$ es variable debido a fenómenos como nacimientos y muertes por otras causas y viajes al extranjero.
-  * El modelo no tiene en cuenta que al saturarse el sistema de salud, la tasa de mortalidad $\mu$ tiende a crecer.
+  * El modelo no tiene en cuenta que al saturarse el sistema de salud, la tasa de mortalidad \mu tiende a crecer.
   * El modelo no tiene en cuenta las medidas tomadas por el gobierno Nacional.
 
 Para la predicción de la tendencia de Covid-19 en Colombia, se incluye un estado adicional que son los difuntos (clase D). Estos modelos epidemiológicos se rigen por una serie de ecuaciones diferenciales  
 
-![ecuaciones_diferenciales](img/SIRD.png)
+<p align = "center" >
+  <img src="img/SIRD.png" alt="Ecuaciones Diferenciales SIRD" width="400px" height="300px"/>
+</p>
 
-Donde $N$ corresponde a la población general, $\beta$ corresponde a la tasa de transmisión de la enfermedad es decir, el número promedio de individuos susceptibles que una persona infectada contagia por día. Esta variable depende del grado de distanciamiento social y de las prácticas higiénicas que adopte la población. Poco distanciamiento social y malas prácticas higiénicas se reflejan en un $\beta$ alto. 
+Donde $N$ corresponde a la población general, \beta corresponde a la tasa de transmisión de la enfermedad es decir, el número promedio de individuos susceptibles que una persona infectada contagia por día. Esta variable depende del grado de distanciamiento social y de las prácticas higiénicas que adopte la población. Poco distanciamiento social y malas prácticas higiénicas se reflejan en un \beta alto. 
 
-$\gamma$, corresponde a la tasa de recuperación, la cual representa la tasa de personas infectadas que se recuperan y dejan de ser contagiosas.
-$\mu$ es la tasa de mortalidad, la cual representa la tasa de personas infectadas que mueren.
+\gamma, corresponde a la tasa de recuperación, la cual representa la tasa de personas infectadas que se recuperan y dejan de ser contagiosas.
+\mu es la tasa de mortalidad, la cual representa la tasa de personas infectadas que mueren.
 
 
 ##### Predicción de Covid-19 en Colombia usando el modelo SIRD
@@ -194,20 +202,25 @@ Para la prediccion del Covid-19 en las principales ciudades de Colombia se lleva
 
 Para cada una de las ciudades se calcularon:
   * Tiempo como número de días, a partir de la fecha de inicio de síntomas 
-  * Tasa de contagio ($\beta$), Tasa de recuperación ($\gamma$) y tasa de muerte ($\mu$) a nivel de día, partiendo de la información actual y acumulada. Para el tiempo 0 se tomo como refencia un ($\beta$) = 0.05, ($\gamma$)=0.02 y  ($\mu$) = 0.005. Estos valores de acuerdo a lo encontrado en la literatura para el Covid-19 o similares.
+  * Tasa de contagio (\beta), Tasa de recuperación (\gamma) y tasa de muerte (\mu) a nivel de día, partiendo de la información actual y acumulada. Para el tiempo 0 se tomo como refencia un (\beta) = 0.05, (\gamma)=0.02 y (\mu) = 0.005. Estos valores de acuerdo a lo encontrado en la literatura para el Covid-19 o similares.
   * Con las tasas anteriores y teniendo la información historica del comportamiento del virus, se procede a reemplazar los valores en las ecuaciones diferenciales que sigue el modelo. Con esto se halla los números de suceptibles,  muertos,  contagios,  recuperados e infectados diariamente.
 
 Ejemplo del comportamiento del virus en Medellín, a partir de la información real
 
-![medellin](img/med.png)
+<p align = "center" >
+  <img src="img/med.png" alt="Comportamiento Medellín" width="400px" height="300px"/>
+</p>
 
 La predicción de los números de suceptibles, muertos,  contagios, recuperados e infectados, se abordó bajo la siguiente metodología:
   * Se busca predecir el corto, mediano y largo plazo, definiendo como corto plazo 5 días, mediano plazo 10 días y largo plazo 15 días.
-  * La predicción de las tasas de contagio ($\beta$), tasas de recuperación ($\gamma$) y tasas de muerte ($\mu$) se realizó a partir del cálculo de medias moviles de los últimos 5 días, se probaron diferentes días y se tomo 5 como el número óptimo para el cálculo de medias moviles.
+  * La predicción de las tasas de contagio (\beta), tasas de recuperación (\gamma) y tasas de muerte (\mu) se realizó a partir del cálculo de medias moviles de los últimos 5 días, se probaron diferentes días y se tomo 5 como el número óptimo para el cálculo de medias moviles.
   * Con estas tasas calculas se procede a reemplazar las ecuaciones diferenciales del modelo y con esto se determina el comportamiento del virus en cada una de las cinco ciudades.
 
+  Ejemplo del comportamieto real para los casos activos más predicción a corto, mediano, largo plazo en Medellín
 
-
+<p align = "center" >
+  <img src="img/activos_med.png" alt="Predección Medellín" width="400px" height="300px"/>
+</p>
 
 
 # Evaluación 
@@ -238,8 +251,11 @@ Se hallaron los siguientes resultados.
 
 # Despliegue 
 
-En esta fase se busca entregar los resulados de la solución a la organización
+En esta fase se busca entregar los resulados de la solución a la organización.
 
-Para el despliegue se creo un dashboard utilizando el framework de Python, Dash. 
-La exposición en internet fue usando heroku, la cual es una plataforma como servicio de computación en la nube
+
+Para el despliegue se ejecuta el modelo para cada una de las 5 ciudades y como producto de datos se creo un dashboard utilizando el framework de Python, Dash. 
+
+La exposición en internet fue usando heroku, la cual es una plataforma como servicio de computación en la nube, con este despliegue se garantiza que cada vez que se visualice el dashboard se ejecuta el modelo con la información actualizada por el INS diariamente.
+
 Para visualizar el dashboard se puede consultar [Predicción Covid-19 Colombia](https://covid-19-colombia.herokuapp.com)
