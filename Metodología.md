@@ -251,14 +251,41 @@ Después de desarrollar el modelo SIRD, mediante el cálculo de medias móviles 
 Se hallaron los siguientes resultados:
 
 #### Calculos RMSE
+<p align = "center" >
 
-![Alt text](img/RMSE_med.JPG)
+![Alt text](img/RMSE_med.JPG) ![Alt text](img/RMSE_bog.JPG)
 
-![Alt text](img/RMSE_bog.JPG)
+![Alt text](img/RMSE_cali.JPG) ![Alt text](img/RMSE_bar.JPG)
+
+![Alt text](img/RMSE_car.JPG) 
+
+</p>
 
 ![Alt text](img/RMSE_cali.JPG)
 
-![Alt text](img/RMSE_bar.JPG)
+#### Intervalos de Confianza
+Para el cálculo de los intervalos de confianza para cada caso evaluado, se calculó de la siguiente forma:
+1. Cálculo de la desviación estandar. 
+Esta se calculó hallando la desviación estandar utilizando los datos test y entrenamiento de la siguiente forma:
+
+  stdev = np.sqrt(sum((datos_test - datos_entrenamiento)**2) / (len(datos_entrenamiento)))
+
+2. Se cálculo la media de todo el set de datos teniendo encuenta datos reales y datos pronosticados.
+
+3. Despues de tener estos valores se procedio a calcular el intervalo de confinza con un 95% de confianza, asi:
+
+<p align = "center" >
+    <b>media +- 1.96*stdev</b>
+</p>
+
+Después de los cálculos se optinen los siguientes intervalos.
+
+[Alt text](img/IC_Med.JPG) 
+[Alt text](img/IC_Bog.JPG) 
+[Alt text](img/IC_Cali.JPG) 
+[Alt text](img/IC_Bar.JPG) 
+[Alt text](img/IC_Car.JPG) 
+
 
 ![Alt text](img/RMSE_car.JPG)
 
