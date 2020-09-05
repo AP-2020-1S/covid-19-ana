@@ -95,16 +95,22 @@ Se realizó un análisis exploratorio de los datos y el detalle se puede encontr
 ### Análisis gráfico a corte de 30 de Agosto de 2020
 
 #### Comparación entre las 5 ciudades con mas casos
-![Alt text](img/pieCiudades.JPG)
+<p align = "center" >
+  <img src="img/pieCiudades.JPG" alt="alt" height="300px"  width="300px"/>
+</p>
 
 #### Estados de la infección por ciudad
-![Alt text](img/CiudadesEstados.JPG)
+<p align = "center" >
+  <img src="img/CiudadesEstados.JPG" alt="alt" height="300px"/>
+</p>
 
 #### Evolución en el tiempo
 ![Alt text](img/CiudadesTiempo.JPG)
 
 #### Tabla comparativa
-![Alt text](img/compara.JPG)
+<p align = "center" >
+  <img src="img/compara.JPG" alt="alt" height="300px"/>
+</p>
 
 Nota: La columna ERR cuenta los registros que originalmente tenian fecha de recuperado y fecha de muerte simultaneamente.
 
@@ -171,6 +177,14 @@ Como se puede observar, la aproximación usando la función logística supuso un
 
 ### Librería Prophet
 La libreria de codigo abierto [Prophet](https://facebook.github.io/prophet/#:~:text=Forecasting%20at%20scale.-,Prophet%20is%20a%20forecasting%20procedure%20implemented%20in%20R%20and%20Python,by%20data%20scientists%20and%20analysts.&text=Prophet%20is%20open%20source%20software,download%20on%20CRAN%20and%20PyPI.) desarrollada por facebook permite realizar pronosticos de series de tiempo basada en un [modelo aditivo](https://en.wikipedia.org/wiki/Additive_model#:~:text=In%20statistics%2C%20an%20additive%20model,class%20of%20nonparametric%20regression%20models.) donde las tendencias no lineales se ajustan con una estacionalidad anual, semanal o diaria. Es robsta para el manejo series con estacionalidades y data incompleta y por lo general maneja adecuadamente la ocurrencia de outliers. 
+Al modelar los casos acumulados de infectados se encuentra que es capaz de seguir la tendencia como se tenía pero no es capaz de detectar la meseta por lo cual la predicción sigue con una tendencia fuerte al alza.
+<p align = "center" >
+  <img src="img/prophetInf.JPG" alt="alt" height="300px"/>
+</p>
+Con los muertos ocurre una situación similar, la tendencia crece indefinidamente
+<p align = "center" >
+  <img src="img/prophetMuert.JPG" alt="alt" height="300px"/>
+</p>
 
 #### SIRD (Suceptible - Infectado - Recuperado - Difuntos)
 
