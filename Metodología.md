@@ -2,12 +2,12 @@
 
 Para el desarrollo del proyecto de predicción de Covid-19 en las principales ciudades de Colombia se utilizó la metodología CRISP-DM (Cross-Industry Standard Process for Data Mining), la cual proporciona una descripción normalizada del ciclo de vida de un proyecto estándar de análisis de datos. Esta metodología contiene seis fases: 
 
-1. [Entendimiento del negocio](#a1)
-2. [Entendimiento de los datos](#a2)
-3. [Preparación de datos](#a3)
-4. [Modelamiento](#a4)
-5. [Evaluación](#a5)
-6. [Despliegue](#a6)
+1. Entendimiento del negocio
+2. Entendimiento de los datos
+3. Preparación de datos
+4. Modelamiento
+5. Evaluación
+6. Desarrollo
 
 La secuencia de las fases no es estricta. De hecho, la mayoría de los proyectos avanzan y retroceden entre fases en caso de ser necesario. 
 
@@ -15,7 +15,6 @@ La secuencia de las fases no es estricta. De hecho, la mayoría de los proyectos
   <img src="https://miro.medium.com/max/494/1*VH9RlYPSjL6YOtBtHxunqQ.png" alt="CRISP-DM" width="300px" height="300px"/>
 </p>
 
-<a name="a1"></a>
 # Entendimiento del negocio
 En esta fase se busca conocer la necesidad del negocio, evaluar la situación actual y determinar el objetivo a resolver con el proyecto de minería de datos.
 
@@ -23,7 +22,7 @@ Coronavirus es el nombre que recibe una amplia familia de virus que pueden infec
 
 La enfermedad del Covid-19 fue reportada el 31 de diciembre de 2019 en la ciudad de Wuhan en China, esta enfermedad se exparció rápidamente por el mundo al punto que la organización mundial de la salud (OMS), declaró el 4 de mayo de 2020, el Covid-19 como pandemia, luego de que se registraran 3.581.884 confirmados al rededor del mundo, dejando a esa fecha 248.558 muertes.
 
-Colombia no ha sido ajena a la pandemia. El primer caso positivo se registró el 6 de marzo de 2020 y el gobierno nacional el 24 de marzo declara ailamiento estricto para evitar la rápida propagación y así poder mitigar el impacto que ocasionaría la enfermedad en la red hospitalaria. 
+Colombia no ha sido ajena a la pandemia. El primer caso positivo se registró el 6 de marzo de 2020 y el gobierno nacional el 24 de marzo declara aislamiento estricto para evitar la rápida propagación y así poder mitigar el impacto que ocasionaría la enfermedad en la red hospitalaria. 
 
 ### Objetivo del negocio
 
@@ -46,7 +45,6 @@ El objetivo de este proyecto es la predicción de corto y mediano plazo del tota
 
   * Debe presentar métricas de calibración para la información histórica.
 
-<a name="a2"></a>
 # Entendimiento de los datos
 
 En esta fase se explora las fuentes de datos a utilizar para el desarrollo del proyecto, se describen los datos, se exploran y se verifica la calidad de los mismos.
@@ -94,7 +92,7 @@ Para la información poblacional se utilizó la información del censo proyectad
 Se realizó un análisis exploratorio de los datos y el detalle se puede encontrar en el siguiente vínculo:
 [Análisis descriptivo](docs/Análisis_descriptivo_Covid.ipynb)
 
-### Análisis gráfico a corte de 30 de Agosto de 2020
+#### Análisis gráfico a corte de 30 de Agosto de 2020
 
 #### Comparación entre las 5 ciudades con mas casos
 <p align = "center" >
@@ -118,12 +116,12 @@ Nota: La columna ERR cuenta los registros que originalmente tenian fecha de recu
 
 ### Hallazgos
 
-1. La columna de atención en la cual se registran diferentes estados se encontró que hay problemas de calidad como registros que tienen fecha de recuperado o de muerto y no su correspondiente estado, o valores nulos por lo cual se tomó la decisión de utilizar las fechas de recuperado y de muerte para realizar los respectivos conteos.
+1. La columna de atención en la cual se registran diferentes estados se encontró que hay problemas de calidad como registros que tienen fecha de recuperado o de muerto y no su correspondiente estado o valores nulos, por lo cual se tomó la decisión de utilizar las fechas de recuperado y de muerte para realizar los respectivos conteos.
 2. Se evidencia que el campo de fecha de inicio de síntomas se está utilizando para marcar los casos de personas asintomáticas por lo cual es necesario hacer una limpieza para realizar los conteos de infecciones con dicho campo. 
-3. Se encontró que existen registros con el campo de fecha de recuperado y fecha de muerte simultaneamente lo cual es una inconsistencia por lo cual se debe realizar un tratamiento.
-4. Al validar los conteos de infectados, muertos, recuperados y activos de los ultimos dias reportados, encontramos que los últimos días siempre se registran valores atípicos que en días posteriores se actualizan por lo cual determinamos que lo mejor es descartar los ultimos 3 días de la serie para evitar que dichos datos preliminares generen ruido en las tendencias.
+3. Se encontró que existen registros con el campo de fecha de recuperado y fecha de muerte simultaneamente lo cual es una inconsistencia por tanto se debe realizar un tratamiento.
+4. Al validar los conteos de infectados, muertos, recuperados y activos de los ultimos dias reportados, encontramos que los últimos días siempre se registran valores atípicos que en días posteriores son actualizados, por lo cual se determina que lo mejor es descartar los ultimos 3 días de la serie para evitar que dichos datos preliminares generen ruido en las tendencias.
 
-<a name="a3"></a>
+
 # Preparación de datos
 
 En esta fase se toma como insumo los hallazgos encontrados en la fase anterior para ser ajustados de acuerdo a lo requerido, aquí se seleccionan los datos a usar dentro del proyecto, se aumenta la calidad de los mismos, en caso de ser necesario se construyen nuevos atributos y se integra diferentes fuentes de información
@@ -144,17 +142,17 @@ Dado que se tienen varios casos encontrados en los hallazgos, a continuación se
 
 2. Para los casos donde se encontró registros con Fecha de muerte y fecha de recuperados a la vez, se decidió dejar únicamente la fecha de acuerdo a su tipo de atención. Asi mismo, se asignó 0 para los contadores de los respectivos casos.
 
-3. Dado que hay casos sin fechas de diagnostico, que hacen referencia a casos asintomaticos o que no se ha asentado su información en la base de datos, se decide imputar su "fecha de inicio de síntomas" con la "fecha de reporte web"
+3. Dado que hay casos sin fechas de inicio de síntomas, que hacen referencia a casos asintomaticos o que no se ha asentado su información en la base de datos, se decide imputar su "fecha de inicio de síntomas" con la "fecha de reporte web"
 
-4. Dado que se encontró que para los ultimos días, por cada ciudad, días sin casos o con casos muy diferentes a su tendencia diria, se tomó la decisión de eliminar los ultimos 3 días por cada ciudad. 
+4. Dado que se encontró que para los ultimos días, por cada ciudad, días sin casos o con casos muy diferentes a su tendencia diaria, se tomó la decisión de eliminar los ultimos 3 días por cada ciudad. 
 
-##### Derivación de nuevos atributos
+#### Derivación de nuevos atributos
 
 1. Para hacer conteos de contagios, recuperados, muertos, activos  y casos confirmados, se toma la decisión de generar variables de conteo teniendo como referencia las fechas.
 
-2. Para generar la vista minable, se toma la decisión de generar un dataframe con una sola columna "fecha", que se calcula como todas las fechas a partir de fechas minimasy fechas maximsa que a su vez se calcularon entre fechas maximas y minimas encontradas de Fecha inicio sintomas, fecha de recuperado y fecha de muerte. 
+2. Para generar la vista minable, se toma la decisión de generar un dataframe con una sola columna de "fecha", que se calcula como todas las fechas a partir de fechas mínimas y fechas máximas que a su vez se calcularon entre fechas máximas y mínimas encontradas a partir de fecha inicio sintomas, fecha de recuperado y fecha de muerte. 
 
-<a name="a4"></a>
+
 # Modelamiento
 
 En la fase de modelamiento se evaluan las diferentes técnicas que de acuerdo a la literatura y conocimiento previo tengan una aproximación significativa a la solución del objetivo de mineria de datos. Se selecciona la técnica que más se ajusta, para luego construir el modelo y ejecutarlo.
@@ -163,7 +161,9 @@ En la fase de modelamiento se evaluan las diferentes técnicas que de acuerdo a 
 
 #### Modelo lógistico
 Función mantemática usada en diferentes modelos de crecimiento poblacional, propagación de enfermedades epidémicas. Se caracteriza por un crecimiento incremental al inicio y luego decrecer en un estado del tiempo, dicho crecimiento es carecterizado por la fórmula:
-![log_formula](https://miro.medium.com/max/536/1*ktniY6tA5bAZrhRTkyWEBg.png)
+<p align = "center" >
+  !<img src=https://miro.medium.com/max/536/1*ktniY6tA5bAZrhRTkyWEBg.png/>
+</p>
 
 
 Se realizó una aproximación con este método para determinar los casos confirmados en el tiempo. A continuación se muestra el resultado obtenido:
@@ -173,12 +173,12 @@ Se realizó una aproximación con este método para determinar los casos confirm
   <img src="img/Infectados_acumulados_logistica.PNG" alt="Infectados Acumulados por día" width="400px" height="300px"/>
 </p>
 
-Como se puede observar, la aproximación usando la función logística supuso un ajuste significativo para este caso. Sin embargo, al repetir el ejercicio con otras variables como recuperados o fallecidos, la función no se ajustó, por lo cual se descartó su uso.
+Como se puede observar, la aproximación usando la función logística supuso un ajuste significativo para este caso. Sin embargo, al repetir el ejercicio con otras variables como recuperados o fallecidos, la función no se ajustó, por lo cual se descartó su uso. La función converge rápidamente, permitiendo hacer únicamente aproximaciones a corto plazo.
 
 #### Librería Prophet
 
-La libreria de codigo abierto [Prophet](https://facebook.github.io/prophet/#:~:text=Forecasting%20at%20scale.-,Prophet%20is%20a%20forecasting%20procedure%20implemented%20in%20R%20and%20Python,by%20data%20scientists%20and%20analysts.&text=Prophet%20is%20open%20source%20software,download%20on%20CRAN%20and%20PyPI.) desarrollada por facebook permite realizar pronosticos de series de tiempo basada en un [modelo aditivo](https://en.wikipedia.org/wiki/Additive_model#:~:text=In%20statistics%2C%20an%20additive%20model,class%20of%20nonparametric%20regression%20models.) donde las tendencias no lineales se ajustan con una estacionalidad anual, semanal o diaria. Es robsta para el manejo series con estacionalidades y data incompleta y por lo general maneja adecuadamente la ocurrencia de outliers. 
-Al modelar los casos acumulados de infectados se encuentra que es capaz de seguir la tendencia como se tenía pero no es capaz de detectar la meseta por lo cual la predicción sigue con una tendencia fuerte al alza.
+La libreria de codigo abierto [Prophet](https://facebook.github.io/prophet/#:~:text=Forecasting%20at%20scale.-,Prophet%20is%20a%20forecasting%20procedure%20implemented%20in%20R%20and%20Python,by%20data%20scientists%20and%20analysts.&text=Prophet%20is%20open%20source%20software,download%20on%20CRAN%20and%20PyPI.) desarrollada por facebook permite realizar pronosticos de series de tiempo basada en un [modelo aditivo](https://en.wikipedia.org/wiki/Additive_model#:~:text=In%20statistics%2C%20an%20additive%20model,class%20of%20nonparametric%20regression%20models.) donde las tendencias no lineales se ajustan con una estacionalidad anual, semanal o diaria. Es robusta para el manejo series con estacionalidades y data incompleta y por lo general maneja adecuadamente la ocurrencia de outliers. 
+Al modelar los casos acumulados de infectados se encuentra que es capaz de seguir la tendencia como se tenía, pero no es capaz de detectar la meseta por lo cual la predicción sigue con una tendencia fuerte al alza.
 <p align = "center" >
   <img src="img/prophetInf.JPG" alt="alt" height="300px"/>
 </p>
@@ -186,7 +186,7 @@ Con los muertos ocurre una situación similar, la tendencia crece indefinidament
 <p align = "center" >
   <img src="img/prophetMuert.JPG" alt="alt" height="300px"/>
 </p>
-Por lo anterior consideramos que por la libreria Prophet y las series de tiempo no tenemos un modelo adecuado
+Por lo anterior consideramos que por la libreria Prophet no tenemos un modelo adecuado
 
 #### SIRD (Suceptible - Infectado - Recuperado - Difuntos)
 
@@ -197,7 +197,7 @@ Los modelos epidemiológico suponen una serie de supuestos, los cuales se detall
   * La interacción entre los individuos es aleatoria.
   * Las personas recuperadas no se reinfectan.
   * No se tiene en cuenta que la población N es variable debido a fenómenos como nacimientos y muertes por otras causas y viajes al extranjero.
-  * El modelo no tiene en cuenta que al saturarse el sistema de salud, la tasa de mortalidad  &mu; tiende a crecer.
+  * El modelo no tiene en cuenta que al saturarse el sistema de salud, la tasa de mortalidad  (&mu;) tiende a crecer.
   * El modelo no tiene en cuenta las medidas tomadas por el gobierno Nacional.
 
 Para la predicción de la tendencia de Covid-19 en Colombia, se incluye un estado adicional que son los difuntos (clase D). Estos modelos epidemiológicos se rigen por una serie de ecuaciones diferenciales  
@@ -206,10 +206,8 @@ Para la predicción de la tendencia de Covid-19 en Colombia, se incluye un estad
   <img src="img/SIRD.png" alt="Ecuaciones Diferenciales SIRD" width="400px" height="300px"/>
 </p>
 
-Donde N corresponde a la población general, &beta; corresponde a la tasa de transmisión de la enfermedad es decir, el número promedio de individuos susceptibles que una persona infectada contagia por día. Esta variable depende del grado de distanciamiento social y de las prácticas higiénicas que adopte la población. Poco distanciamiento social y malas prácticas higiénicas se reflejan en un  &beta; alto. 
-
- &gamma;, corresponde a la tasa de recuperación, la cual representa la tasa de personas infectadas que se recuperan y dejan de ser contagiosas.
- &mu; es la tasa de mortalidad, la cual representa la tasa de personas infectadas que mueren.
+Donde **N** corresponde a la población general, **&beta;** corresponde a la tasa de transmisión de la enfermedad es decir, el número promedio de individuos susceptibles, que una persona infectada contagia por día. Esta variable depende del grado de distanciamiento social y de las prácticas higiénicas que adopte la población. Poco distanciamiento social y malas prácticas higiénicas se reflejan en un &beta; alto. **&gamma;**, corresponde a la tasa de recuperación, la cual representa la tasa de personas infectadas que se recuperan y dejan de ser contagiosas.
+**&mu;** es la tasa de mortalidad, la cual representa la tasa de personas infectadas que mueren.
 
 
 ##### Predicción de Covid-19 en Colombia usando el modelo SIRD
@@ -218,8 +216,9 @@ Para la prediccion del Covid-19 en las principales ciudades de Colombia se lleva
 
 Para cada una de las ciudades se calcularon:
   * Tiempo como número de días, a partir de la fecha de inicio de síntomas 
-  * Tasa de contagio ( &beta;), Tasa de recuperación ( &gamma;) y tasa de muerte ( &mu;) a nivel de día, partiendo de la información actual y acumulada. Para el tiempo 0 se tomo como refencia un ( &beta;) = 0.05, ( &gamma;)=0.02 y ( &mu;) = 0.005. Estos valores de acuerdo a lo encontrado en la literatura para el Covid-19 o similares.
-  * Con las tasas anteriores y teniendo la información historica del comportamiento del virus, se procede a reemplazar los valores en las ecuaciones diferenciales que sigue el modelo. Con esto se halla los números de suceptibles,  muertos,  contagios,  recuperados e infectados diariamente.
+  * Tasa de contagio ( &beta;), Tasa de recuperación ( &gamma;) y tasa de muerte ( &mu;) a nivel de día, partiendo de la información actual y acumulada. 
+  Para el tiempo 0 se tomo como refencia un ( &beta;) = 0.05, ( &gamma;)=0.02 y ( &mu;) = 0.005. Estos valores de acuerdo a lo encontrado en la literatura para el Covid-19 o similares.
+  * Con las tasas anteriores y teniendo la información historica del comportamiento del virus, se procede a reemplazar los valores en las ecuaciones diferenciales, que sigue el modelo. Con esto se halla los valores de suceptibles,  muertos, contagios, recuperados e infectados diariamente.
 
 Ejemplo del comportamiento del virus en Medellín, a partir de la información real
 
@@ -229,7 +228,7 @@ Ejemplo del comportamiento del virus en Medellín, a partir de la información r
 
 La predicción de los números de suceptibles, muertos,  contagios, recuperados e infectados, se abordó bajo la siguiente metodología:
   * Se busca predecir el corto, mediano y largo plazo, definiendo como corto plazo 5 días, mediano plazo 10 días y largo plazo 15 días.
-  * La predicción de las tasas de contagio ( &beta;), tasas de recuperación ( &gamma;) y tasas de muerte ( &mu;) se realizó a partir del cálculo de medias moviles de los últimos 5 días, se probaron diferentes días y se tomo 5 como el número óptimo para el cálculo de medias moviles.
+  * La predicción de las tasas de contagio (&beta;), tasas de recuperación (&gamma;) y tasas de muerte (&mu;) se realizó a partir del cálculo de medias moviles de los últimos 5 días. Se probaron diferentes días y se tomo 5 como el número óptimo para el cálculo de medias móviles.
   * Con estas tasas calculas se procede a reemplazar las ecuaciones diferenciales del modelo y con esto se determina el comportamiento del virus en cada una de las cinco ciudades.
 
   Ejemplo del comportamieto real para los casos activos más predicción a corto, mediano, largo plazo en Medellín
@@ -238,41 +237,36 @@ La predicción de los números de suceptibles, muertos,  contagios, recuperados 
   <img src="img/activos_med.png" alt="Predección Medellín" width="600px" height="300px"/>
 </p>
 
-<a name="a5"></a>
+Dado los resultados obtenidos, se selecciona el modelo SIRD como el modelo que ayuda a responder los objetivos del negocio y de mineria de datos.
+
 # Evaluación 
 
-En esta etapa se revisa los resultados obtenidos en la ejecución del modelo, con el fin de evaluar las métricas de desempeño que arroja el modelo y determinar si este cumple con los objetivos propuestos.
+En esta etapa se revisa los resultados obtenidos en la ejecución del modelo, con el fin de evaluar sus métricas de desempeño y determinar si este cumple con los objetivos propuestos.
 
-Después de desarrollar el modelo SIRD, mediante el cálculo de medias móviles en cada uno de los días a pronosticar, se desarrollo la siguiente técnica para realizar la evaluación del modelo. 
+Después de desarrollar el modelo SIRD, mediante el cálculo de medias móviles en cada uno de los dias a pronosticar, se desarrolló la siguiente técnica para realizar la evaluación del modelo. 
 
-1. Partición de data.
-Se tomo la data generada en la etapa de preparación de datos y se crearon dos dataset, realizando una división a partir de los últimos 30 días, contenidos en la información disponible. La primera porción de datos se destino para realizar la predicción y la segunda la cual contiene los últimos 30 días fue utilizada como data de contraste con la predicción que arroja el modelo. 
+1. Partición de data. Se tomó la data generada en la etapa de preparación de datos y se crearon dos datasets, realizando una división a partir de los ultimos 30 días, contenidos en la información disponible. La primera porción de datos se destino para realizar la predicción y la segunda la cual contiene los ultimos 30 días fue utilizada como data de contraste con la predicción que arroja el modelo. 
+2. Cálculo del error. Teniendo los 30 días seleccionados como data real y los 30 días como resultado del modelo, se procedio a calcular el RMSE (Error Cuadrático Medio) para cada modelo realizado por ciudad y variable a estimar (muertos, activos, confirmados, suceptibles, contagiados). 
 
-2. Calculo del error.
-Teniendo los 30 días seleccionados como data real y los 30 días como resultado del modelo, se procedió a calcular el RMSE (Error Cuadrático Medio) para cada modelado realizado por Ciudad y Variable a estimar (muertos,activos,confirmados,susceptibles,contagiados). 
-
-Se hallaron los siguientes resultados.
+Se hallaron los siguientes resultados:
 
 #### Calculos RMSE
-<p align = "center" >
-|![Alt text](img/RMSE_med.JPG)|![Alt text](img/RMSE_bog.JPG)|
 
-|![Alt text](img/RMSE_cali.JPG)|![Alt text](img/RMSE_bar.JPG)|
+![Alt text](img/RMSE_med.JPG)
 
-|![Alt text](img/RMSE_car.JPG)||
-</p>
+![Alt text](img/RMSE_bog.JPG)
 
-3. Conclusiones de la evaluación.
-El error cuadrático medio (RMSE) mide la cantidad de error que hay entre dos conjuntos de datos. Compara un valor predicho contra un valor observado o conocido. Para las cinco ciudades que se están estudiando y para cada una de las variables estudiadas, aunque vemos una tendencia adecuada en los datos, se observan valores altos en sus errores, esto se puede explicar debido a la metodología utilizada en el modelo SIRD, donde las medias móviles suavizan las tendencias perdiendo así precisión en la estimación.
+![Alt text](img/RMSE_cali.JPG)
 
+![Alt text](img/RMSE_bar.JPG)
 
+![Alt text](img/RMSE_car.JPG)
 
+3. Conclusiones de la evaluación. El error cuadrático medio (RMSE) mide la cantidad de error que hay entre dos conjuntos de datos. Compara un valor predicho contra un valor observado o conocido. Para las cinco ciudades que se están estudiando y para cada una de las variables estudiadas, aunque vemos una tendencia adecuada en los datos, se observan valores altos en sus errores, esto se puede explicar debido a la metodología utilizada en el modelo SIRD, donde las medias móviles suavizan las tendencia perdiendo así la precisión en la estimación.
 
-<a name="a6"></a>
 # Despliegue 
 
 En esta fase se busca entregar los resulados de la solución a la organización.
-
 
 Para el despliegue se ejecuta el modelo para cada una de las 5 ciudades y como producto de datos se creo un dashboard utilizando el framework de Python, Dash. 
 
