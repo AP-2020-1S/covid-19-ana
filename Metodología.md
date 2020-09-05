@@ -147,8 +147,6 @@ En la fase de modelamiento se evaluan las diferentes técnicas que de acuerdo a 
 
 ### Técnicas evaluadas
 
-#### SIR (Suceptible - Infectado - Recuperado o Muerto)
-
 #### Modelo lógistico
 Función mantemática usada en diferentes modelos de crecimiento poblacional, propagación de enfermedades epidémicas. Se caracteriza por un crecimiento incremental al inicio y luego decrecer en un estado del tiempo, dicho crecimiento es carecterizado por la fórmula:
 ![log_formula](https://miro.medium.com/max/536/1*ktniY6tA5bAZrhRTkyWEBg.png)
@@ -157,6 +155,39 @@ Función mantemática usada en diferentes modelos de crecimiento poblacional, pr
 
 #### Librería Prophet
 La libreria de codigo abierto [Prophet](https://facebook.github.io/prophet/#:~:text=Forecasting%20at%20scale.-,Prophet%20is%20a%20forecasting%20procedure%20implemented%20in%20R%20and%20Python,by%20data%20scientists%20and%20analysts.&text=Prophet%20is%20open%20source%20software,download%20on%20CRAN%20and%20PyPI.) desarrollada por facebook permite realizar pronosticos de series de tiempo basada en un [modelo aditivo](https://en.wikipedia.org/wiki/Additive_model#:~:text=In%20statistics%2C%20an%20additive%20model,class%20of%20nonparametric%20regression%20models.) donde las tendencias no lineales se ajustan con una estacionalidad anual, semanal o diaria. Es robsta para el manejo series con estacionalidades y data incompleta y por lo general maneja adecuadamente la ocurrencia de outliers. 
+
+### SIRD (Suceptible - Infectado - Recuperado - Difuntos)
+
+Los modelos basados en SIR asumen que la infección se propaga a través de varios grupos, por ejemplo, susceptibles, expuestos, infectados, recuperados, fallecidos e inmunes. Para los modelos estándar basados en SIR se tiene que una epidemia incluye susceptibles a la infección (clase S), infectados (clase I) y la población eliminada (clase R).
+
+Los modelos epidemiológico suponen una serie de supuestos, los cuales se detallan:
+
+  * La interacción entre los individuos es aleatoria.
+  * Las personas recuperadas no se reinfectan.
+  * No se tiene en cuenta que la población $N$ es variable debido a fenómenos como nacimientos y muertes por otras causas y viajes al extranjero.
+  * El modelo no tiene en cuenta que al saturarse el sistema de salud, la tasa de mortalidad $\mu$ tiende a crecer.
+  * El modelo no tiene en cuenta las medidas tomadas por el gobierno Nacional.
+
+Para la predicción de la tendencia de Covid-19 en Colombia, se incluye un estado adicional que son los difuntos (clase D). Estos modelos epidemiológicos se rigen por una serie de ecuaciones diferenciales  
+
+![ecuaciones_diferenciales](img/SIRD.png)
+
+Donde $N$ corresponde a la población general, $\beta$ corresponde a la tasa de transmisión de la enfermedad es decir, el número promedio de individuos susceptibles que una persona infectada contagia por día. Esta variable depende del grado de distanciamiento social y de las prácticas higiénicas que adopte la población. Poco distanciamiento social y malas prácticas higiénicas se reflejan en un $\beta$ alto. 
+
+$\gamma$, corresponde a la tasa de recuperación, la cual representa la tasa de personas infectadas que se recuperan y dejan de ser contagiosas.
+$\mu$ es la tasa de mortalidad, la cual representa la tasa de personas infectadas que mueren.
+
+
+##### Predicción de Covid-19 en Colombia usando el modelo SIRD
+
+Para la prediccion del Covid-19 en las principales ciudades de Colombia se llevaron a cabo las siguientes actividades, una vez ejecutada la limpieza de datos y la vista minable ajustada.
+
+Para cada una de las ciudades se calcularon:
+  * Tiempo como número de días, a partir de la fecha de inicio de síntomas 
+  * Tasa de contagio ($\beta$), Tasa de recuperación ($\gamma$) y tasa de muerte ($\mu$) a nivel de día, partiendo de la información actual y acumulada.
+  * Con las tasas anteriores y teniendo la información historica del comportamiento del virus, se procede a reemplazar los valores en las ecuaciones diferenciales que sigue el modelo, para hallar los suceptibles, los muertos, los contagios, los recuperados, los infectados diariamente.
+
+
 
 
 
