@@ -175,7 +175,6 @@ Como se puede observar, la aproximación usando la función logística supuso un
 
 #### Librería Prophet
 
-### Librería Prophet
 La libreria de codigo abierto [Prophet](https://facebook.github.io/prophet/#:~:text=Forecasting%20at%20scale.-,Prophet%20is%20a%20forecasting%20procedure%20implemented%20in%20R%20and%20Python,by%20data%20scientists%20and%20analysts.&text=Prophet%20is%20open%20source%20software,download%20on%20CRAN%20and%20PyPI.) desarrollada por facebook permite realizar pronosticos de series de tiempo basada en un [modelo aditivo](https://en.wikipedia.org/wiki/Additive_model#:~:text=In%20statistics%2C%20an%20additive%20model,class%20of%20nonparametric%20regression%20models.) donde las tendencias no lineales se ajustan con una estacionalidad anual, semanal o diaria. Es robsta para el manejo series con estacionalidades y data incompleta y por lo general maneja adecuadamente la ocurrencia de outliers. 
 Al modelar los casos acumulados de infectados se encuentra que es capaz de seguir la tendencia como se tenía pero no es capaz de detectar la meseta por lo cual la predicción sigue con una tendencia fuerte al alza.
 <p align = "center" >
@@ -204,7 +203,7 @@ Para la predicción de la tendencia de Covid-19 en Colombia, se incluye un estad
   <img src="img/SIRD.png" alt="Ecuaciones Diferenciales SIRD" width="400px" height="300px"/>
 </p>
 
-Donde $N$ corresponde a la población general, $\beta$ corresponde a la tasa de transmisión de la enfermedad es decir, el número promedio de individuos susceptibles que una persona infectada contagia por día. Esta variable depende del grado de distanciamiento social y de las prácticas higiénicas que adopte la población. Poco distanciamiento social y malas prácticas higiénicas se reflejan en un $\beta$ alto. 
+Donde $$\N$$ corresponde a la población general, $$\beta$$ corresponde a la tasa de transmisión de la enfermedad es decir, el número promedio de individuos susceptibles que una persona infectada contagia por día. Esta variable depende del grado de distanciamiento social y de las prácticas higiénicas que adopte la población. Poco distanciamiento social y malas prácticas higiénicas se reflejan en un $\beta$ alto. 
 
 $\gamma$, corresponde a la tasa de recuperación, la cual representa la tasa de personas infectadas que se recuperan y dejan de ser contagiosas.
 $\mu$ es la tasa de mortalidad, la cual representa la tasa de personas infectadas que mueren.
