@@ -2,12 +2,12 @@
 
 Para el desarrollo del proyecto de predicción de Covid-19 en las principales ciudades de Colombia se utilizó la metodología CRISP-DM (Cross-Industry Standard Process for Data Mining), la cual proporciona una descripción normalizada del ciclo de vida de un proyecto estándar de análisis de datos. Esta metodología contiene seis fases: 
 
-1. Entendimiento del negocio
-2. Entendimiento de los datos
-3. Preparación de datos
-4. Modelamiento
-5. Evaluación
-6. Desarrollo
+1. [Entendimiento del negocio](#a1)
+2. [Entendimiento de los datos](#a2)
+3. [Preparación de datos](#a3)
+4. [Modelamiento](#a4)
+5. [Evaluación](#a5)
+6. [Desarrollo](#a6)
 
 La secuencia de las fases no es estricta. De hecho, la mayoría de los proyectos avanzan y retroceden entre fases en caso de ser necesario. 
 
@@ -15,6 +15,7 @@ La secuencia de las fases no es estricta. De hecho, la mayoría de los proyectos
   <img src="https://miro.medium.com/max/494/1*VH9RlYPSjL6YOtBtHxunqQ.png" alt="CRISP-DM" width="300px" height="300px"/>
 </p>
 
+<a name="a1"></a>
 # Entendimiento del negocio
 En esta fase se busca conocer la necesidad del negocio, evaluar la situación actual y determinar el objetivo a resolver con el proyecto de minería de datos.
 
@@ -45,6 +46,7 @@ El objetivo de este proyecto es la predicción de corto y mediano plazo del tota
 
   * Debe presentar métricas de calibración para la información histórica.
 
+<a name="a2"></a>
 # Entendimiento de los datos
 
 En esta fase se explora las fuentes de datos a utilizar para el desarrollo del proyecto, se describen los datos, se exploran y se verifica la calidad de los mismos.
@@ -121,7 +123,7 @@ Nota: La columna ERR cuenta los registros que originalmente tenian fecha de recu
 3. Se encontró que existen registros con el campo de fecha de recuperado y fecha de muerte simultaneamente lo cual es una inconsistencia por lo cual se debe realizar un tratamiento.
 4. Al validar los conteos de infectados, muertos, recuperados y activos de los ultimos dias reportados, encontramos que los últimos días siempre se registran valores atípicos que en días posteriores se actualizan por lo cual determinamos que lo mejor es descartar los ultimos 3 días de la serie para evitar que dichos datos preliminares generen ruido en las tendencias.
 
-
+<a name="a3"></a>
 # Preparación de datos
 
 En esta fase se toma como insumo los hallazgos encontrados en la fase anterior para ser ajustados de acuerdo a lo requerido, aquí se seleccionan los datos a usar dentro del proyecto, se aumenta la calidad de los mismos, en caso de ser necesario se construyen nuevos atributos y se integra diferentes fuentes de información
@@ -152,7 +154,7 @@ Dado que se tienen varios casos encontrados en los hallazgos, a continuación se
 
 2. Para generar la vista minable, se toma la decisión de generar un dataframe con una sola columna "fecha", que se calcula como todas las fechas a partir de fechas minimasy fechas maximsa que a su vez se calcularon entre fechas maximas y minimas encontradas de Fecha inicio sintomas, fecha de recuperado y fecha de muerte. 
 
-
+<a name="a4"></a>
 # Modelamiento
 
 En la fase de modelamiento se evaluan las diferentes técnicas que de acuerdo a la literatura y conocimiento previo tengan una aproximación significativa a la solución del objetivo de mineria de datos. Se selecciona la técnica que más se ajusta, para luego construir el modelo y ejecutarlo.
@@ -236,7 +238,7 @@ La predicción de los números de suceptibles, muertos,  contagios, recuperados 
   <img src="img/activos_med.png" alt="Predección Medellín" width="600px" height="300px"/>
 </p>
 
-
+<a name="a5"></a>
 # Evaluación 
 
 En esta etapa se revisa los resultados obtenidos en la ejecución del modelo, con el fin de evaluar las métricas de desempeño que arroja el modelo y determinar si este cumple con los objetivos propuestos.
@@ -262,7 +264,7 @@ Se hallaron los siguientes resultados.
 
 
 
-
+<a name="a6"></a>
 # Despliegue 
 
 En esta fase se busca entregar los resulados de la solución a la organización.
