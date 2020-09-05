@@ -52,6 +52,9 @@ En esta fase se explora las fuentes de datos a utilizar para el desarrollo del p
 El comportamiento del Covid-19 en las principales ciudades de Colombia esta siendo recolectado y centralizado por el Instituto Nacional de Salud. Esta información esta siendo puesta a disposición del público general, a través de la página web [www.datos.gov.co](https://www.datos.gov.co/Salud-y-Protecci-n-Social/Casos-positivos-de-COVID-19-en-Colombia/gt2j-8ykr/data)
 
 ### Diccionario de datos
+
+#### Casos positivos diarios de Covid-19 en Colombia
+
 |**Campo**                             |**Tipo de dato** |
 |---------                             | --------------- |
 |ID de caso.                           | Texto           | 
@@ -117,8 +120,6 @@ Las actividades realizadas para la construcción de la vista minable, se relacio
 
 Se seleccionaron las cinco (5) ciudades de Colombia con mayor número de casos desde el inicio de la pandemia, estas ciudades son Bogota, Medellín, Cali, Barranquilla y Cartagena.
 
-![Alt text](img/Ciudades_casos.PNG)
-
 #### Limpieza
 
 Dado que se tienen varios casos encontrados en los hallazgos, a continuación se menciona las actividades realizadas:
@@ -127,7 +128,7 @@ Dado que se tienen varios casos encontrados en los hallazgos, a continuación se
 
 2. Para los casos donde se encontró registros con Fecha de muerte y fecha de recuperados a la vez, se decidió dejar únicamente la fecha de acuerdo a su tipo de atención. Asi mismo, se asignó 0 para los contadores de los respectivos casos.
 
-3. Dado que hay casos sin fechas de diagnóstico, que hacen referencia a casos asintomaticos o que no se ha asentado su información en la base de datos, se decide imputar su "fecha de diagnostico" con la "fecha de reporte web"
+3. Dado que hay casos sin fechas de diagnostico, que hacen referencia a casos asintomaticos o que no se ha asentado su información en la base de datos, se decide imputar su "fecha de inicio de síntomas" con la "fecha de reporte web"
 
 4. Dado que se encontró que para los ultimos días, por cada ciudad, días sin casos o con casos muy diferentes a su tendencia diria, se tomó la decisión de eliminar los ultimos 3 días por cada ciudad. 
 
@@ -135,7 +136,8 @@ Dado que se tienen varios casos encontrados en los hallazgos, a continuación se
 
 1. Para hacer conteos de contagios, recuperados, muertos, activos  y casos confirmados, se toma la decisión de generar variables de conteo teniendo como referencia las fechas.
 
-2. Para generar la vista minable, se toma la decisión de generar un dataframe con una sola columna "fecha", que se calcula como todas las fechas a partir de fechas minima y fechas maxima que a su vez se calcularon entre fechas maximas y minimas encontradas de Fecha inicio sintomas, fecha de recuperado y fecha de muerte. 
+2. Para generar la vista minable, se toma la decisión de generar un dataframe con una sola columna "fecha", que se calcula como todas las fechas a partir de fechas minimasy fechas maximsa que a su vez se calcularon entre fechas maximas y minimas encontradas de Fecha inicio sintomas, fecha de recuperado y fecha de muerte. 
+
 
 # Modelamiento
 
