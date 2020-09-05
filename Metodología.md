@@ -7,7 +7,7 @@ Para el desarrollo del proyecto de predicción de Covid-19 en las principales ci
 3. [Preparación de datos](#a3)
 4. [Modelamiento](#a4)
 5. [Evaluación](#a5)
-6. [Desarrollo](#a6)
+6. [Despliegue](#a6)
 
 La secuencia de las fases no es estricta. De hecho, la mayoría de los proyectos avanzan y retroceden entre fases en caso de ser necesario. 
 
