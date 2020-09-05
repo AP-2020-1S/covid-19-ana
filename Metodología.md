@@ -194,7 +194,7 @@ Los modelos epidemiológico suponen una serie de supuestos, los cuales se detall
 
   * La interacción entre los individuos es aleatoria.
   * Las personas recuperadas no se reinfectan.
-  * No se tiene en cuenta que la población $\N$ es variable debido a fenómenos como nacimientos y muertes por otras causas y viajes al extranjero.
+  * No se tiene en cuenta que la población N es variable debido a fenómenos como nacimientos y muertes por otras causas y viajes al extranjero.
   * El modelo no tiene en cuenta que al saturarse el sistema de salud, la tasa de mortalidad  &mu; tiende a crecer.
   * El modelo no tiene en cuenta las medidas tomadas por el gobierno Nacional.
 
@@ -204,7 +204,7 @@ Para la predicción de la tendencia de Covid-19 en Colombia, se incluye un estad
   <img src="img/SIRD.png" alt="Ecuaciones Diferenciales SIRD" width="400px" height="300px"/>
 </p>
 
-Donde N corresponde a la población general, $ &beta;$ corresponde a la tasa de transmisión de la enfermedad es decir, el número promedio de individuos susceptibles que una persona infectada contagia por día. Esta variable depende del grado de distanciamiento social y de las prácticas higiénicas que adopte la población. Poco distanciamiento social y malas prácticas higiénicas se reflejan en un  &beta; alto. 
+Donde N corresponde a la población general, &beta; corresponde a la tasa de transmisión de la enfermedad es decir, el número promedio de individuos susceptibles que una persona infectada contagia por día. Esta variable depende del grado de distanciamiento social y de las prácticas higiénicas que adopte la población. Poco distanciamiento social y malas prácticas higiénicas se reflejan en un  &beta; alto. 
 
  &gamma;, corresponde a la tasa de recuperación, la cual representa la tasa de personas infectadas que se recuperan y dejan de ser contagiosas.
  &mu; es la tasa de mortalidad, la cual representa la tasa de personas infectadas que mueren.
