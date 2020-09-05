@@ -111,7 +111,13 @@ En esta fase se toma como insumo los hallazgos encontrados en la fase anterior p
 
 ### Actividades realizadas
 
+Las actividades realizadas para la construcción de la vista minable, se relacionan a continuación:
+
 #### Datos seleccionados
+
+Se seleccionaron las cinco (5) ciudades de Colombia con mayor número de casos desde el inicio de la pandemia, estas ciudades son Bogota, Medellín, Cali, Barranquilla y Cartagena.
+
+![Alt text](img/Ciudades_casos.PNG)
 
 #### Limpieza
 
