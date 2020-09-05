@@ -281,11 +281,13 @@ Esta se calculó hallando la desviación estandar utilizando los datos test y en
 Después de los cálculos se optinen los siguientes intervalos.
 
 <p align = "center" >
+
   ![Alt text](img/IC_Med.JPG) 
   ![Alt text](img/IC_Bog.JPG) 
   ![Alt text](img/IC_Cali.JPG) 
   ![Alt text](img/IC_Bar.JPG) 
   ![Alt text](img/IC_Car.JPG) 
+
 </p>
 
 
