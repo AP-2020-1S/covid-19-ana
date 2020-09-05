@@ -261,7 +261,7 @@ Se hallaron los siguientes resultados:
 
 </p>
 
-
+3. Conclusiones de la evaluación. El error cuadrático medio (RMSE) mide la cantidad de error que hay entre dos conjuntos de datos. Compara un valor predicho contra un valor observado o conocido. Para las cinco ciudades que se están estudiando y para cada una de las variables estudiadas, aunque vemos una tendencia adecuada en los datos, se observan valores altos en sus errores, esto se puede explicar debido a la metodología utilizada en el modelo SIRD, donde las medias móviles suavizan las tendencia perdiendo así la precisión en la estimación.
 
 #### Intervalos de Confianza
 Para el cálculo de los intervalos de confianza para cada caso evaluado, se calculó de la siguiente forma:
@@ -291,9 +291,6 @@ Después de los cálculos se optinen los siguientes intervalos.
 </p>
 
 
-
-
-3. Conclusiones de la evaluación. El error cuadrático medio (RMSE) mide la cantidad de error que hay entre dos conjuntos de datos. Compara un valor predicho contra un valor observado o conocido. Para las cinco ciudades que se están estudiando y para cada una de las variables estudiadas, aunque vemos una tendencia adecuada en los datos, se observan valores altos en sus errores, esto se puede explicar debido a la metodología utilizada en el modelo SIRD, donde las medias móviles suavizan las tendencia perdiendo así la precisión en la estimación.
 
 # Despliegue 
 
