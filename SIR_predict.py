@@ -82,7 +82,7 @@ class SirPredict():
                 new_t['tasa_recup'].iloc[row] = new_t.iloc[row-1]['tasa_rec_prom']
                 new_t['tasa_muerte'].iloc[row] = new_t.iloc[row-1]['tasa_muerte_prom']
 
-            original_df = df_tasas[['Ciudad de ubicación','t', 'total_rec','muertos','activo', 'confirmado', 'suceptible','tasa_trans', 'tasa_recup', 'tasa_muerte']]
+            original_df = df_tasas[['Ciudad de ubicación','t', 'total_rec','muertos','contagio','sanos','activo', 'confirmado', 'suceptible','tasa_trans', 'tasa_recup', 'tasa_muerte']]
             predict_df = new_t[['Ciudad de ubicación','t', 'total_rec','muertos','contagio','sanos','activo', 'confirmado', 'suceptible','tasa_trans', 'tasa_recup', 'tasa_muerte']]
             predict_df = new_t[new_t['t'] > tamano]
             # predichos.drop(0,inplace=True)

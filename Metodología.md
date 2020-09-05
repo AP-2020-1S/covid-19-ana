@@ -52,6 +52,9 @@ En esta fase se explora las fuentes de datos a utilizar para el desarrollo del p
 El comportamiento del Covid-19 en las principales ciudades de Colombia esta siendo recolectado y centralizado por el Instituto Nacional de Salud. Esta información esta siendo puesta a disposición del público general, a través de la página web [www.datos.gov.co](https://www.datos.gov.co/Salud-y-Protecci-n-Social/Casos-positivos-de-COVID-19-en-Colombia/gt2j-8ykr/data)
 
 ### Diccionario de datos
+
+#### Casos positivos diarios de Covid-19 en Colombia
+
 |**Campo**                             |**Tipo de dato** |
 |---------                             | --------------- |
 |ID de caso.                           | Texto           | 
@@ -111,11 +114,30 @@ En esta fase se toma como insumo los hallazgos encontrados en la fase anterior p
 
 ### Actividades realizadas
 
+Las actividades realizadas para la construcción de la vista minable, se relacionan a continuación:
+
 #### Datos seleccionados
+
+Se seleccionaron las cinco (5) ciudades de Colombia con mayor número de casos desde el inicio de la pandemia, estas ciudades son Bogota, Medellín, Cali, Barranquilla y Cartagena.
 
 #### Limpieza
 
+Dado que se tienen varios casos encontrados en los hallazgos, a continuación se menciona las actividades realizadas:
+
+1. Para mejor manejo, se tomó la decisión de convertir todas las fechas a datetime.
+
+2. Para los casos donde se encontró registros con Fecha de muerte y fecha de recuperados a la vez, se decidió dejar únicamente la fecha de acuerdo a su tipo de atención. Asi mismo, se asignó 0 para los contadores de los respectivos casos.
+
+3. Dado que hay casos sin fechas de diagnostico, que hacen referencia a casos asintomaticos o que no se ha asentado su información en la base de datos, se decide imputar su "fecha de inicio de síntomas" con la "fecha de reporte web"
+
+4. Dado que se encontró que para los ultimos días, por cada ciudad, días sin casos o con casos muy diferentes a su tendencia diria, se tomó la decisión de eliminar los ultimos 3 días por cada ciudad. 
+
 #### Derivación de nuevos atributos
+
+1. Para hacer conteos de contagios, recuperados, muertos, activos  y casos confirmados, se toma la decisión de generar variables de conteo teniendo como referencia las fechas.
+
+2. Para generar la vista minable, se toma la decisión de generar un dataframe con una sola columna "fecha", que se calcula como todas las fechas a partir de fechas minimasy fechas maximsa que a su vez se calcularon entre fechas maximas y minimas encontradas de Fecha inicio sintomas, fecha de recuperado y fecha de muerte. 
+
 
 # Modelamiento
 
@@ -144,4 +166,4 @@ En esta fase se busca entregar los resulados de la solución a la organización
 
 Para el despliegue se creo un dashboard utilizando el framework de Python, Dash. 
 La exposición en internet fue usando heroku, la cual es una plataforma como servicio de computación en la nube
-Para visualizar el dashboard se puede consultar [Predicción Covid-19 Colombia]()
+Para visualizar el dashboard se puede consultar [Predicción Covid-19 Colombia](https://covid-19-colombia.herokuapp.com)
