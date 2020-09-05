@@ -214,6 +214,27 @@ La predicción de los números de suceptibles, muertos,  contagios, recuperados 
 
 En esta etapa se revisa los resultados obtenidos en la ejecución del modelo, con el fin de evaluar las métricas de desempeño que arroja el modelo y determinar si este cumple con los objetivos propuestos.
 
+Despues de desarrollar el modelo SIRD, mediante el calculo de medias moviles en cada uno de los dias a pronosticar, se desarrollo la siguiente tecnica para realizar la evaluación del modelo. 
+
+1. Partición de data.
+Se tomo la data generada en la etapa de preparación de datos y se crearon dos dataset, realizando una division a partir de los ultimos 30 dias, contenidos en la información disponible. La primera porsión de datos se destino para realizar la predicción y la segunda la cual contiene los ultimos 30 días fue utilizada como data de contraste con la prediccion que arroja el modelo. Teniendo los 30 días seleccionados como data real y los 30 dias como resultado del modelo, se procedio a calcular el RMSE (Error Cuadratico Medio) para cada modelado realizado por Ciudad y Variable a estimar (muertos,activos,confirmados,suceptibles,contagiados). 
+
+Se hallaron los siguientes resultados.
+
+#### Calculos RMSE
+
+![Alt text](img/RMSE_med.JPG)
+
+![Alt text](img/RMSE_bog.JPG)
+
+![Alt text](img/RMSE_cali.JPG)
+
+![Alt text](img/RMSE_bar.JPG)
+
+![Alt text](img/RMSE_car.JPG)
+
+
+
 
 # Despliegue 
 
