@@ -328,7 +328,7 @@ def update_figure(selected_city):
         fig = px.line(filtered_df_orig, x='t', y='activo', 
             labels={
             "t": "Tiempo (t)",
-            "activo": "Población"}, title='Comportamiento Real a lo largo del tiempo del Covid-19')
+            "activo": "Estimación"}, title='Comportamiento del modelo SIR a partir de la data original a lo largo del tiempo del Covid-19')
         fig.add_scatter(x=filtered_df_orig['t'], y=filtered_df_orig['confirmado'], mode = 'lines', name='Nuevos Casos')
         fig.add_scatter(x=filtered_df_orig['t'], y=filtered_df_orig['total_rec'], mode = 'lines', name='Recuperados')
         fig.add_scatter(x=filtered_df_orig['t'], y=filtered_df_orig['muertos'], mode = 'lines', name='Muertos')
@@ -355,15 +355,20 @@ def update_figure(selected_city):
         filtered_df_orig = originales[originales['Ciudad de ubicación'] == selected_city]
         filtered_df_pred = predichos[predichos['Ciudad de ubicación'] == selected_city]
 
+        if selected_city == 'Bogotá D.C.' or  selected_city == 'Barranquilla':
+            alto = 10000
+        else:
+            alto = 4000
+
         fig = px.line(filtered_df_orig, x='t', y='activo', 
         labels={
                      "t": "Tiempo (t)",
-                     "activo": "Población"
+                     "activo": "Estimación"
             }, title='Casos Activos')
         fig.add_traces(go.Scatter(x=filtered_df_pred['t'], y=filtered_df_pred['activo'], mode = 'lines',name='Predicho'))
-        fig.add_trace(go.Scatter(x=[int(corto_plazo), int(corto_plazo)], y=[0, 4000], mode="lines", name="Corto Plazo", line = dict(dash='dot')))
-        fig.add_trace(go.Scatter(x=[int(mediano_plano), int(mediano_plano)], y=[0, 4000], mode="lines", name="Mediano Plazo",line = dict(dash='dot')))
-        fig.add_trace(go.Scatter(x=[int(largo_plazo), int(largo_plazo)], y=[0, 4000], mode="lines", name="Largo Plazo",line = dict(dash='dot')))
+        fig.add_trace(go.Scatter(x=[int(corto_plazo), int(corto_plazo)], y=[0, alto], mode="lines", name="Corto Plazo", line = dict(dash='dot')))
+        fig.add_trace(go.Scatter(x=[int(mediano_plano), int(mediano_plano)], y=[0, alto], mode="lines", name="Mediano Plazo",line = dict(dash='dot')))
+        fig.add_trace(go.Scatter(x=[int(largo_plazo), int(largo_plazo)], y=[0, alto], mode="lines", name="Largo Plazo",line = dict(dash='dot')))
 
         fig.update_layout(
             legend=dict(
@@ -387,15 +392,20 @@ def update_figure(selected_city):
         filtered_df_orig = originales[originales['Ciudad de ubicación'] == selected_city]
         filtered_df_pred = predichos[predichos['Ciudad de ubicación'] == selected_city]
 
-        fig = px.line(filtered_df_orig, x='t', y='activo', 
+        if selected_city == 'Bogotá D.C.':
+            alto = 20000
+        else:
+            alto = 6000
+
+        fig = px.line(filtered_df_orig, x='t', y='confirmado', 
             labels={
                      "t": "Tiempo (t)",
-                     "activo": "Población"
+                     "activo": "Estimación"
             }, title='Casos Confirmados')
-        fig.add_traces(go.Scatter(x=filtered_df_pred['t'], y=filtered_df_pred['activo'], name='Predicho'))
-        fig.add_trace(go.Scatter(x=[int(corto_plazo), int(corto_plazo)], y=[0, 4000], mode="lines", name="Corto Plazo", line = dict(dash='dot')))
-        fig.add_trace(go.Scatter(x=[int(mediano_plano), int(mediano_plano)], y=[0, 4000], mode="lines", name="Mediano Plazo",line = dict(dash='dot')))
-        fig.add_trace(go.Scatter(x=[int(largo_plazo), int(largo_plazo)], y=[0, 4000], mode="lines", name="Largo Plazo",line = dict(dash='dot')))
+        fig.add_traces(go.Scatter(x=filtered_df_pred['t'], y=filtered_df_pred['confirmado'], name='Predicho'))
+        fig.add_trace(go.Scatter(x=[int(corto_plazo), int(corto_plazo)], y=[0, alto], mode="lines", name="Corto Plazo", line = dict(dash='dot')))
+        fig.add_trace(go.Scatter(x=[int(mediano_plano), int(mediano_plano)], y=[0, alto], mode="lines", name="Mediano Plazo",line = dict(dash='dot')))
+        fig.add_trace(go.Scatter(x=[int(largo_plazo), int(largo_plazo)], y=[0, alto], mode="lines", name="Largo Plazo",line = dict(dash='dot')))
 
         fig.update_layout(
             legend=dict(
@@ -417,10 +427,15 @@ def update_figure(selected_city):
         filtered_df_orig = originales[originales['Ciudad de ubicación'] == selected_city]
         filtered_df_pred = predichos[predichos['Ciudad de ubicación'] == selected_city]
 
+        if selected_city == 'Bogotá D.C.' or  selected_city == 'Barranquilla':
+            alto = 15000
+        else:
+            alto = 4000
+
         fig = px.line(filtered_df_orig, x='t', y='total_rec', 
         labels={
                      "t": "Tiempo (t)",
-                     "activo": "Población"
+                     "activo": "Estimación"
             }, title= 'Recuperados')
         fig.add_traces(go.Scatter(x=filtered_df_pred['t'], y=filtered_df_pred['total_rec'], name='Predicho'))
         fig.add_trace(go.Scatter(x=[int(corto_plazo), int(corto_plazo)], y=[0, 4000], mode="lines", name="Corto Plazo", line = dict(dash='dot')))
@@ -450,7 +465,7 @@ def update_figure(selected_city):
         fig = px.line(filtered_df_orig, x='t', y='muertos', 
         labels={
                      "t": "Tiempo (t)",
-                     "activo": "Población"
+                     "activo": "Estimación"
             }, title= 'Muertos')
         fig.add_traces(go.Scatter(x=filtered_df_pred['t'], y=filtered_df_pred['muertos'], name='Predicho'))
         fig.add_trace(go.Scatter(x=[int(corto_plazo), int(corto_plazo)], y=[0, 8], mode="lines", name="Corto Plazo", line = dict(dash='dot')))
@@ -477,15 +492,15 @@ def update_figure(selected_city):
         filtered_df_orig = originales[originales['Ciudad de ubicación'] == selected_city]
         filtered_df_pred = predichos[predichos['Ciudad de ubicación'] == selected_city]
 
-        fig = px.line(filtered_df_orig, x='t', y='confirmado', 
+        fig = px.line(filtered_df_orig, x='t', y='contagio', 
         labels={
                      "t": "Tiempo (t)",
-                     "activo": "Población"
+                     "activo": "Estimación"
             }, title='Nuevos Casos')
-        fig.add_traces(go.Scatter(x=filtered_df_pred['t'], y=filtered_df_pred['confirmado'], name='Predicho'))
-        fig.add_trace(go.Scatter(x=[int(corto_plazo), int(corto_plazo)], y=[0, 6000], mode="lines", name="Corto Plazo", line = dict(dash='dot')))
-        fig.add_trace(go.Scatter(x=[int(mediano_plano), int(mediano_plano)], y=[0, 6000], mode="lines", name="Mediano Plazo",line = dict(dash='dot')))
-        fig.add_trace(go.Scatter(x=[int(largo_plazo), int(largo_plazo)], y=[0, 6000], mode="lines", name="Largo Plazo",line = dict(dash='dot')))
+        fig.add_traces(go.Scatter(x=filtered_df_pred['t'], y=filtered_df_pred['contagio'], name='Predicho'))
+        fig.add_trace(go.Scatter(x=[int(corto_plazo), int(corto_plazo)], y=[0, 400], mode="lines", name="Corto Plazo", line = dict(dash='dot')))
+        fig.add_trace(go.Scatter(x=[int(mediano_plano), int(mediano_plano)], y=[0, 400], mode="lines", name="Mediano Plazo",line = dict(dash='dot')))
+        fig.add_trace(go.Scatter(x=[int(largo_plazo), int(largo_plazo)], y=[0, 400], mode="lines", name="Largo Plazo",line = dict(dash='dot')))
 
         fig.update_layout(
             legend=dict(
