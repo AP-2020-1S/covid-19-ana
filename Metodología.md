@@ -194,8 +194,17 @@ Para la prediccion del Covid-19 en las principales ciudades de Colombia se lleva
 
 Para cada una de las ciudades se calcularon:
   * Tiempo como número de días, a partir de la fecha de inicio de síntomas 
-  * Tasa de contagio ($\beta$), Tasa de recuperación ($\gamma$) y tasa de muerte ($\mu$) a nivel de día, partiendo de la información actual y acumulada.
-  * Con las tasas anteriores y teniendo la información historica del comportamiento del virus, se procede a reemplazar los valores en las ecuaciones diferenciales que sigue el modelo, para hallar los suceptibles, los muertos, los contagios, los recuperados, los infectados diariamente.
+  * Tasa de contagio ($\beta$), Tasa de recuperación ($\gamma$) y tasa de muerte ($\mu$) a nivel de día, partiendo de la información actual y acumulada. Para el tiempo 0 se tomo como refencia un ($\beta$) = 0.05, ($\gamma$)=0.02 y  ($\mu$) = 0.005. Estos valores de acuerdo a lo encontrado en la literatura para el Covid-19 o similares.
+  * Con las tasas anteriores y teniendo la información historica del comportamiento del virus, se procede a reemplazar los valores en las ecuaciones diferenciales que sigue el modelo. Con esto se halla los números de suceptibles,  muertos,  contagios,  recuperados e infectados diariamente.
+
+Ejemplo del comportamiento del virus en Medellín, a partir de la información real
+
+![medellin](img/med.png)
+
+La predicción de los números de suceptibles, muertos,  contagios, recuperados e infectados, se abordó bajo la siguiente metodología:
+  * Se busca predecir el corto, mediano y largo plazo, definiendo como corto plazo 5 días, mediano plazo 10 días y largo plazo 15 días.
+  * La predicción de las tasas de contagio ($\beta$), tasas de recuperación ($\gamma$) y tasas de muerte ($\mu$) se realizó a partir del cálculo de medias moviles de los últimos 5 días, se probaron diferentes días y se tomo 5 como el número óptimo para el cálculo de medias moviles.
+  * Con estas tasas calculas se procede a reemplazar las ecuaciones diferenciales del modelo y con esto se determina el comportamiento del virus en cada una de las cinco ciudades.
 
 
 

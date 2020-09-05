@@ -11,28 +11,6 @@ import matplotlib.pyplot as plt
 utl = Utilities()
 sir = SIR()
 
-# #%%
-# censo_df = pd.read_excel('data/ProyeccionMunicipios2005_2020.xls', sheet_name = 'Mpios',header=8)
-
-# censo_df['MPIO'] = np.where(censo_df['MPIO'] == 'Bogotá, D.C.', 'Bogotá D.C.', censo_df['MPIO'])
-# censo_df['MPIO'] = np.where(censo_df['MPIO'] == 'Cartagena', 'Cartagena de Indias', censo_df['MPIO'])
-
-# data = pd.read_csv('data/Casos_positivos_de_COVID-19_en_Colombia.csv')
-
-# #%%
-# cities = ["Medellín"]
-# data = data[data["Ciudad de ubicación"].isin(cities)]
-# data = utl.dates_fix(data)
-# data = utl.build_counters(data)
-# data = utl.clean_dataset(data)
-# cities = utl.get_cities(data)
-# dates = utl.get_dates(data)
-# mv = utl.build_mineable_view(data, cities, dates)
-
-# #%%
-# tasas = sir.sir_tasas_init(mv)
-# sir_formulas = sir.sir_tasas(tasas, censo_df)
-
 #%%
 class SirPredict():
     def __init__(self):
